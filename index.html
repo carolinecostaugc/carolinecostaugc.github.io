@@ -94,7 +94,9 @@
   .marca-nome{font-family:var(--serif);font-weight:500;font-size:1.55rem;text-decoration:none;display:flex;align-items:center;gap:10px;line-height:1}
   .menu ul{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:30px}
   .menu a{text-decoration:none;font-size:.74rem;font-weight:450;letter-spacing:.22em;text-transform:uppercase;position:relative;padding:4px 0}
-  .menu a:not(.menu-cta)::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--oliva);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .menu .menu-black{background:#0d0c0b;color:#fff;padding:11px 18px;border-radius:999px}
+  .menu .menu-black:hover{background:#2a2622}
+  .menu a:not(.menu-cta):not(.menu-black)::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--oliva);transform:scaleX(0);transform-origin:left;transition:transform .4s}
   .menu a:hover::after{transform:scaleX(1)}
   .menu .menu-cta{background:var(--oliva);color:var(--cortina);padding:11px 20px;border-radius:999px}
   .menu .menu-cta:hover{background:var(--oliva-fundo)}
@@ -245,6 +247,7 @@
   .player-caixa{position:relative;width:min(400px,100%,calc((100vh - 120px) * 9 / 16));display:grid;gap:12px}
   .player-video{aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5)}
   .player-video iframe{width:100%;height:100%;border:0;display:block}
+  .player-video.instagram{aspect-ratio:auto;height:min(calc(100vh - 120px),760px);background:#fff}
   .player-rodape{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--cortina)}
   .player-rodape p{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.15rem;line-height:1.2}
   .player-rodape a{flex:none;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#e9c08f}
@@ -261,6 +264,25 @@
   .servico h3{font-size:1.9rem}
   .servico p{color:var(--cafe-2);font-size:.96rem}
   .servicos-cta{display:flex;justify-content:center;margin-top:clamp(28px,4vw,44px)}
+
+  /* =========== BLACK FRIDAY =========== */
+  .blackfriday{background-color:#0d0c0b;background-image:var(--grao);color:var(--cortina);overflow:hidden}
+  .blackfriday::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background-color:#efe7da;background-image:var(--granilite,none);background-size:200px}
+  .bf-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(36px,6vw,80px);align-items:center}
+  .bf-selo{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border:1px solid rgba(244,240,232,.35);border-radius:999px;font-size:.7rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase}
+  .bf-selo i{width:8px;height:8px;border-radius:50%;background:var(--caramelo)}
+  .blackfriday h2{font-size:clamp(3.4rem,9vw,7.4rem);font-weight:600;line-height:.9;margin:22px 0 24px;letter-spacing:-.02em}
+  .blackfriday h2 em{color:var(--caramelo);font-weight:600}
+  .bf-texto{font-family:var(--serif);font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.25;font-weight:500;max-width:520px}
+  .bf-sub{color:rgba(244,240,232,.8);margin:14px 0 32px;max-width:480px}
+  .btn-bf{background:var(--cortina);color:#0d0c0b}
+  .btn-bf:hover{background:var(--caramelo);color:#0d0c0b;transform:translateY(-2px)}
+  .bf-pacotes{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  .bf-pacotes li{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:18px;align-items:center;padding:20px 24px;border:1px solid rgba(244,240,232,.18);border-radius:20px;background:rgba(244,240,232,.04)}
+  .bf-pacotes li:nth-child(2){transform:translateX(-18px)}
+  .bf-pacotes span{grid-row:1/3;font-size:.68rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--caramelo);border-right:1px solid rgba(244,240,232,.18);padding-right:18px}
+  .bf-pacotes b{font-family:var(--serif);font-size:1.6rem;font-weight:600;line-height:1.1}
+  .bf-pacotes small{font-size:.8rem;color:rgba(244,240,232,.7)}
 
   /* =========== 6. NÚMEROS E DEPOIMENTOS =========== */
   .metricas{display:grid;grid-template-columns:repeat(4,1fr);border-radius:28px;overflow:hidden;background-image:var(--madeira);color:var(--cortina);box-shadow:var(--sombra)}
@@ -358,6 +380,17 @@
     .metrica:nth-child(3){border-left:0}
     .metrica:nth-child(n+3){border-top:1px solid rgba(244,240,232,.2)}
   }
+  /* menu vira hambúrguer antes do resto, porque tem dois botões */
+  @media (max-width:1080px){
+    .hamburguer{display:block}
+    .menu{position:fixed;inset:78px 0 auto 0;background:var(--cortina);border-bottom:1px solid var(--linha);padding:10px 16px 26px;transform:translateY(-8px);opacity:0;visibility:hidden;transition:all .35s}
+    .menu.aberto{transform:none;opacity:1;visibility:visible}
+    .menu ul{flex-direction:column;align-items:stretch;gap:0}
+    .menu a{display:block;padding:16px 0;font-size:.8rem;border-bottom:1px solid var(--linha)}
+    .menu a::after{display:none}
+    .menu .menu-cta,.menu .menu-black{margin-top:12px;text-align:center;padding:16px;border-bottom:0}
+    .topo.menu-aberto{background:var(--cortina)}
+  }
   @media (max-width:900px){
     .hamburguer{display:block}
     .menu{position:fixed;inset:78px 0 auto 0;background:var(--cortina);border-bottom:1px solid var(--linha);padding:10px 16px 26px;transform:translateY(-8px);opacity:0;visibility:hidden;transition:all .35s}
@@ -365,7 +398,10 @@
     .menu ul{flex-direction:column;align-items:stretch;gap:0}
     .menu a{display:block;padding:16px 0;font-size:.8rem;border-bottom:1px solid var(--linha)}
     .menu a::after{display:none}
-    .menu .menu-cta{margin-top:16px;text-align:center;padding:16px;border-bottom:0}
+    .menu .menu-cta,.menu .menu-black{margin-top:12px;text-align:center;padding:16px;border-bottom:0}
+    .palco-fotos{order:-1}
+    .bf-grid{grid-template-columns:1fr}
+    .bf-pacotes li:nth-child(2){transform:none}
     .topo.menu-aberto{background:var(--cortina)}
     .capa-grid,.sobre-grid,.contato-grid{grid-template-columns:1fr}
     .palco-fotos{aspect-ratio:auto;justify-self:center;max-width:520px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px}
@@ -437,10 +473,11 @@
     </button>
     <nav class="menu" id="menu" aria-label="Menu principal">
       <ul>
-        <li><a href="#sobre">Sobre</a></li>
         <li><a href="#destaques">Destaques</a></li>
+        <li><a href="#sobre">Sobre</a></li>
         <li><a href="#trabalhos">Trabalhos</a></li>
         <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#blackfriday" class="menu-black">Black Friday</a></li>
         <li><a href="#numeros">Números</a></li>
         <li><a href="#contato" class="menu-cta">Contato</a></li>
       </ul>
@@ -512,11 +549,26 @@
   <div class="faixa-janela"><div class="faixa-trilho" id="faixa-trilho"></div></div>
 </div>
 
-<!-- ============ 2. SOBRE MIM ============ -->
+<!-- ============ 2. CONTEÚDOS DE DESTAQUE ============ -->
+<section class="destaques escuro" id="destaques" aria-labelledby="titulo-destaques">
+  <div class="container">
+    <div class="cabeca revelar">
+      <span class="rotulo">Destaques</span>
+      <h2 id="titulo-destaques">Conteúdos de <em>destaque</em></h2>
+      <p>Três vídeos que mostram o meu jeito de criar. Toque em qualquer um para assistir no Instagram.</p>
+    </div>
+    <!-- Os cards são gerados pelo array "destaques" no script.
+         LINK DO VÍDEO: campo "link" de cada item.
+         CAPA DO VÍDEO: campo "capa" de cada item (deixe "" para usar o degradê). -->
+    <div class="destaques-grid" id="destaques-grid"></div>
+  </div>
+</section>
+
+<!-- ============ 3. SOBRE MIM ============ -->
 <section id="sobre" aria-labelledby="titulo-sobre">
   <div class="container sobre-grid">
     <figure class="sobre-foto revelar">
-      <img src="fotos/caroline-janela.jpg" alt="Caroline Costa sorrindo perto de uma janela, de camisa preta" width="932" height="1400" loading="lazy">
+      <img src="fotos/caroline-sobre.webp" alt="Caroline Costa sorrindo à mesa de gravação, com câmera, microfone, celular, troféu de teatro e caixas de produtos" width="1362" height="1362" loading="lazy">
     </figure>
     <div class="sobre-texto revelar">
       <span class="rotulo">Sobre mim</span>
@@ -539,21 +591,6 @@
       </ul>
       <p class="assinatura">Caroline <em>Costa</em><small>Criadora UGC, atriz, mãe e empresária</small></p>
     </div>
-  </div>
-</section>
-
-<!-- ============ 3. CONTEÚDOS DE DESTAQUE ============ -->
-<section class="destaques escuro" id="destaques" aria-labelledby="titulo-destaques">
-  <div class="container">
-    <div class="cabeca revelar">
-      <span class="rotulo">Destaques</span>
-      <h2 id="titulo-destaques">Conteúdos de <em>destaque</em></h2>
-      <p>Três vídeos que mostram o meu jeito de criar. Toque em qualquer um para assistir no Instagram.</p>
-    </div>
-    <!-- Os cards são gerados pelo array "destaques" no script.
-         LINK DO VÍDEO: campo "link" de cada item.
-         CAPA DO VÍDEO: campo "capa" de cada item (deixe "" para usar o degradê). -->
-    <div class="destaques-grid" id="destaques-grid"></div>
   </div>
 </section>
 
@@ -587,8 +624,27 @@
   </div>
 </section>
 
+<!-- ============ BLACK FRIDAY ============
+     O botão abre o WhatsApp com uma mensagem pronta. Para trocar o texto, mude o que vem depois de "?text=". -->
+<section class="blackfriday" id="blackfriday" aria-labelledby="titulo-blackfriday">
+  <div class="container bf-grid">
+    <div class="revelar">
+      <span class="bf-selo"><i aria-hidden="true"></i>Por tempo limitado</span>
+      <h2 id="titulo-blackfriday">Black <em>Friday</em></h2>
+      <p class="bf-texto">Pacotes exclusivos para a Black Friday, com preços que só vou liberar agora.</p>
+      <p class="bf-sub">Clique se você tem interesse que eu te mando os pacotes disponíveis.</p>
+      <a class="btn btn-bf" href="https://wa.me/5554991088519?text=Oi%20Caroline!%20Tenho%20interesse%20nos%20pacotes%20da%20Black%20Friday.%20Pode%20me%20mandar%20os%20pacotes%20dispon%C3%ADveis%3F" target="_blank" rel="noopener">Quero ver os pacotes <span class="seta" aria-hidden="true">→</span></a>
+    </div>
+    <ul class="bf-pacotes revelar" aria-label="Pacotes da Black Friday">
+      <li><span>Pacote 01</span><b>Preço exclusivo</b><small>liberado por mensagem</small></li>
+      <li><span>Pacote 02</span><b>Preço exclusivo</b><small>liberado por mensagem</small></li>
+      <li><span>Pacote 03</span><b>Preço exclusivo</b><small>liberado por mensagem</small></li>
+    </ul>
+  </div>
+</section>
+
 <!-- ============ 6. NÚMEROS E DEPOIMENTOS ============ -->
-<section id="numeros" aria-labelledby="titulo-numeros" style="padding-top:0">
+<section id="numeros" aria-labelledby="titulo-numeros">
   <div class="container">
     <div class="cabeca revelar">
       <span class="rotulo">Números</span>
@@ -762,37 +818,40 @@ const numerosCapa = [
   { valor: "+220 mil", rotulo: "views no Instagram" }
 ];
 
-// Conteúdos de destaque.
-// link: endereço do vídeo que abre ao clicar no card.
-// capa: caminho da imagem vertical 9:16 (ex.: "fotos/capa-reel-1.jpg"). Deixe "" para usar o degradê.
-// titulo e contexto: TROQUE pelos dados reais de cada vídeo.
+// Conteúdos de destaque: reels do Instagram que tocam na própria página.
+// instagram: o código do reel, que é a parte do link depois de "reel/" e antes da próxima "/".
+//   Exemplo: instagram.com/reel/DZhvVJ_x18R/?utm_source=... vira "DZhvVJ_x18R".
+// capa: imagem vertical 9:16 do vídeo (um arquivo da pasta "fotos" ou um link). Deixe "" para usar o degradê.
 const destaques = [
   {
-    link: "https://www.instagram.com/reel/DZhvVJ_x18R/?obrf=cnNzcTc0YmozZjAx",
-    capa: "",
-    numero: "+9 mil",
-    rotuloNumero: "views no reels",
-    titulo: "Título do reel 01",
-    contexto: "Marca, nicho e objetivo do vídeo em uma linha.",
-    gradiente: "g1"
-  },
-  {
-    link: "https://www.instagram.com/reel/DcOg61gjZa1/?obrf=cnl4N29lNHh2eW1t",
-    capa: "",
-    numero: "+48 mil",
-    rotuloNumero: "views no reels",
-    titulo: "Yelly, app de pagamentos",
-    contexto: "Vídeo de tecnologia publicado no perfil da marca.",
-    gradiente: "g2"
-  },
-  {
-    link: "https://www.instagram.com/reel/Dc2DOyvxt0t/?rpxt=MXdxdzZ4ajRmcmRyMw==",
-    capa: "",
+    instagram: "Dc2DOyvxt0t",
+    capa: "fotos/capa-maternidade.jpg",
+    marca: "Meu perfil",
     numero: "+82 mil",
     rotuloNumero: "views no meu perfil",
     titulo: "Maternidade real",
     contexto: "Vídeo do meu perfil que mostra como eu me comunico com mães.",
     gradiente: "g3"
+  },
+  {
+    instagram: "DZhvVJ_x18R",
+    capa: "fotos/capa-verdi.jpg",
+    marca: "Verdi Natural",
+    numero: "+9 mil",
+    rotuloNumero: "views no Instagram",
+    titulo: "Storytelling emocionante",
+    contexto: "Vídeo feito para a marca Verdi Natural.",
+    gradiente: "g1"
+  },
+  {
+    instagram: "DcOg61gjZa1",
+    capa: "https://i.ytimg.com/vi/I0CT-jt4JpU/oardefault.jpg",   // capa do mesmo vídeo no YouTube
+    marca: "Yelly",
+    numero: "+48 mil",
+    rotuloNumero: "views no perfil da marca",
+    titulo: "App de pagamentos",
+    contexto: "Vídeo de tecnologia feito para a Yelly.",
+    gradiente: "g2"
   }
 ];
 
@@ -916,17 +975,19 @@ $("#faixa-trilho").innerHTML = `<ul>${listaMarcas}</ul><ul aria-hidden="true">${
 
 // Destaques
 $("#destaques-grid").innerHTML = destaques.map((d, i) => `
-  <a class="video-card revelar" href="${esc(d.link)}" target="_blank" rel="noopener"
-     aria-label="Assistir ${esc(d.titulo)} no Instagram, ${esc(d.numero)} ${esc(d.rotuloNumero)}">
+  <a class="video-card revelar" href="https://www.instagram.com/reel/${esc(d.instagram)}/" target="_blank" rel="noopener"
+     data-instagram="${esc(d.instagram)}" data-titulo="${esc(d.marca)}: ${esc(d.titulo)}"
+     aria-label="Assistir ao vídeo ${esc(d.titulo)}, ${esc(d.marca)}, ${esc(d.numero)} ${esc(d.rotuloNumero)}">
     <div class="midia ${d.gradiente || gradientes[i % 5]}">
-      ${d.capa ? `<img src="${esc(d.capa)}" alt="Capa do vídeo ${esc(d.titulo)}" loading="lazy">` : `<span class="legenda">Capa do vídeo 9:16</span>`}
+      ${d.capa ? `<img src="${esc(d.capa)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : ""}
+      <span class="views">${esc(d.marca)}</span>
       <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
     </div>
     <p class="numero">${esc(d.numero)}</p>
     <p class="numero-rotulo">${esc(d.rotuloNumero)}</p>
     <h3>${esc(d.titulo)}</h3>
     <p>${esc(d.contexto)}</p>
-    <span class="abrir" aria-hidden="true">Assistir no Instagram</span>
+    <span class="abrir" aria-hidden="true">Assistir aqui</span>
   </a>`).join("");
 
 // Trabalhos com filtro
@@ -947,13 +1008,19 @@ $("#trabalhos-grid").innerHTML = trabalhos.map((t, i) => `
     <h3>${esc(t.titulo)}</h3>
   </a>`).join("");
 
-// Player: abre o vídeo do YouTube na própria página
+// Player: abre o vídeo do YouTube ou do Instagram na própria página
 const player = $("#player"), playerVideo = $("#player-video"), playerLink = $("#player-link");
 let focoAntesPlayer = null;
-function abrirPlayer(id, titulo) {
+function abrirPlayer(id, titulo, origem = "youtube") {
   focoAntesPlayer = document.activeElement;
-  playerVideo.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1" title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  playerLink.href = "https://www.youtube.com/shorts/" + encodeURIComponent(id);
+  const codigo = encodeURIComponent(id);
+  const embed = origem === "instagram"
+    ? `https://www.instagram.com/reel/${codigo}/embed/`
+    : `https://www.youtube-nocookie.com/embed/${codigo}?autoplay=1&rel=0&playsinline=1`;
+  playerVideo.classList.toggle("instagram", origem === "instagram");
+  playerVideo.innerHTML = `<iframe src="${embed}" title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  playerLink.href = origem === "instagram" ? `https://www.instagram.com/reel/${codigo}/` : `https://www.youtube.com/shorts/${codigo}`;
+  playerLink.textContent = origem === "instagram" ? "Abrir no Instagram" : "Abrir no YouTube";
   $("#player-titulo").textContent = titulo;
   player.classList.add("aberta"); player.setAttribute("aria-hidden", "false");
   $("#fechar-player").focus();
@@ -969,6 +1036,12 @@ $("#trabalhos-grid").addEventListener("click", (e) => {
   if (!card) return;
   e.preventDefault();
   abrirPlayer(card.dataset.video, card.dataset.titulo);
+});
+$("#destaques-grid").addEventListener("click", (e) => {
+  const card = e.target.closest(".video-card");
+  if (!card) return;
+  e.preventDefault();
+  abrirPlayer(card.dataset.instagram, card.dataset.titulo, "instagram");
 });
 $("#fechar-player").addEventListener("click", fecharPlayer);
 player.addEventListener("click", (e) => { if (e.target === player) fecharPlayer(); });
