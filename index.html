@@ -191,6 +191,7 @@
   .credenciais strong{display:block;font-family:var(--serif);font-weight:700;font-size:1.9rem;line-height:1;color:var(--oliva);margin-bottom:6px}
   .sobre-texto p+p{margin-top:16px}
   .sobre-texto p{color:var(--cafe-2)}
+  .sobre-texto p strong{color:var(--cafe);font-weight:600}
   .sobre-texto .destaque{font-family:var(--serif);font-size:1.5rem;line-height:1.35;color:var(--cafe);font-weight:500}
   .promessas{list-style:none;padding:0;margin:34px 0;display:grid;gap:12px}
   .promessas li{display:flex;align-items:center;gap:18px;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid var(--linha);font-weight:450;color:var(--cafe)}
@@ -440,6 +441,10 @@
     .faixa li{height:80px}
     .faixa li img{height:calc(var(--altura,48px) * .78)}
     .trabalhos-grid{grid-template-columns:repeat(2,1fr)}
+    /* filtros viram uma faixa que desliza para o lado */
+    .filtros{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 32px;padding:2px 16px 8px;scrollbar-width:none}
+    .filtros::-webkit-scrollbar{display:none}
+    .filtro{flex:none}
     .servicos-grid{grid-template-columns:1fr}
     .metrica{padding:28px 16px 30px}
     .metrica strong{font-size:2.4rem;white-space:nowrap}
@@ -586,15 +591,15 @@
       <span class="rotulo">Sobre mim</span>
       <h2 id="titulo-sobre">Prazer, eu sou a <em>Caroline</em></h2>
       <p class="sobre-sub">UGC Creator, atriz e diretora teatral há mais de 10 anos</p>
-      <p class="destaque">Eu transformo o roteiro da sua marca em uma conversa verdadeira, daquelas que o público assiste até o fim e em que confia.</p>
-      <p>Foram mais de 10 anos de palco: dirigi e atuei em mais de 50 espetáculos, fiz curtas, escrevi 3 livros e ganhei o prêmio de melhor diretora estudantil. É daí que vêm a minha naturalidade na câmera e o storytelling que faz o seu produto ser lembrado.</p>
-      <p>Como mentora de comunicação, trabalho com empresários de vários nichos do digital, ensinando a palestrar, gravar vídeos e se comunicar de forma estratégica. Por isso eu entendo o que a sua marca precisa dizer, e como dizer para vender.</p>
-      <p>Sou mãe de um bebê de 1 ano e moro na praia, em Balneário Piçarras. Amo criar, vida saudável, praia, família e arte, e é essa vida real que aparece nos meus vídeos.</p>
+      <p class="destaque">Eu transformo o roteiro da sua marca em uma conversa verdadeira, daquelas que o público assiste até o fim e confia.</p>
+      <p><strong>Foram mais de 10 anos de palco:</strong> dirigi e atuei em mais de 50 espetáculos, fiz curtas, escrevi 3 livros e ganhei o prêmio de melhor diretora teatral. <strong>É daí que vêm a minha naturalidade na câmera e o storytelling que faz o seu produto ser lembrado.</strong></p>
+      <p>Como mentora de comunicação, trabalho com empresários de vários nichos do digital, ensinando a palestrar, gravar vídeos e se comunicar de forma estratégica. <strong>Por isso eu entendo o que a sua marca precisa dizer, e como dizer para vender.</strong></p>
+      <p>Sou mãe de um bebê de 1 ano e moro na praia, em Balneário Piçarras - SC. Amo a arte de criar, viver uma vida saudável, estar na praia, com minha família e é essa vida real que aparece como pano de fundo dos meus vídeos.</p>
       <ul class="credenciais" aria-label="Minha trajetória">
         <li><strong>+50</strong>espetáculos dirigidos e atuados</li>
         <li><strong>3</strong>livros escritos</li>
         <li><strong>+10</strong>anos de palco</li>
-        <li><strong>Prêmio</strong>melhor diretora estudantil</li>
+        <li><strong>Prêmio</strong>melhor diretora teatral</li>
       </ul>
       <ul class="promessas">
         <li><span>i</span>Roteiro da marca ou escrito por mim a partir do briefing</li>
@@ -890,7 +895,7 @@ const destaques = [
 ];
 
 // Nichos que aparecem nos botões de filtro
-const nichos = ["Maternidade", "Alimentação saudável", "Autocuidado e beleza", "Casa e rotina", "Negócios e tech"];
+const nichos = ["Maternidade", "Alimentação saudável", "Autocuidado e beleza", "Casa e rotina", "Negócios e tech", "Viagens"];
 
 // Trabalhos da galeria: vídeos do YouTube (não listados). "nicho" precisa ser igual a um dos nomes acima.
 // youtube: o código do vídeo, que é a parte do link depois de "shorts/" e antes do "?".
@@ -911,8 +916,14 @@ const trabalhos = [
   { nicho: "Autocuidado e beleza", marca: "Dentista Juliana",  titulo: "Consultório odontológico", youtube: "Z2Goi_D4Vts", views: "" },
   { nicho: "Casa e rotina",        marca: "Vinagreen",         titulo: "Kit coco",                 youtube: "QulejI99q0M", views: "" },
   { nicho: "Casa e rotina",        marca: "Vinagreen",         titulo: "Sabão e amaciante",        youtube: "1q0BTmaSvOw", views: "" },
+  { nicho: "Casa e rotina",        marca: "Nobugs",            titulo: "Limpador perfumado",       youtube: "D17RURDJGjI", views: "" },
   { nicho: "Negócios e tech",      marca: "Yelly",             titulo: "App de pagamentos",        youtube: "I0CT-jt4JpU", views: "+48 mil views" },
-  { nicho: "Negócios e tech",      marca: "Noroeste Solar",    titulo: "Energia solar na conta de luz", youtube: "2y1m4het3-c", views: "" }
+  { nicho: "Negócios e tech",      marca: "Noroeste Solar",    titulo: "Energia solar na conta de luz", youtube: "2y1m4het3-c", views: "" },
+  { nicho: "Negócios e tech",      marca: "Negócios Essenciais", titulo: "Mentoria de comunicação", youtube: "MT5JdlG90iA", views: "" },
+  { nicho: "Viagens",              marca: "Viagem",            titulo: "Holambra, Cidade das Flores", youtube: "TlM4yjEuAxU", views: "" },
+  { nicho: "Viagens",              marca: "Viagem",            titulo: "Motorhome em família",     youtube: "sRtfQi6Y7Dc", views: "" },
+  { nicho: "Viagens",              marca: "Viagem",            titulo: "Israel",                   youtube: "p5a-evCUSO4", views: "" },
+  { nicho: "Viagens",              marca: "Viagem",            titulo: "Dubai",                    youtube: "v03nWJMZQ9M", views: "" }
 ];
 
 // Serviços (seção "Como eu te ajudo")
