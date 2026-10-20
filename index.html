@@ -266,6 +266,16 @@
   .servico p{color:var(--cafe-2);font-size:.96rem}
   .servicos-cta{display:flex;justify-content:center;margin-top:clamp(28px,4vw,44px)}
 
+  /* =========== FOTOS UGC: faixa que rola sozinha =========== */
+  .fotos-ugc{padding-top:0;overflow:hidden}
+  .carrossel{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+  .carrossel-trilho{display:flex;width:max-content;animation:correr 70s linear infinite}
+  .carrossel:hover .carrossel-trilho{animation-play-state:paused}
+  .foto-ugc{position:relative;flex:none;margin:0 16px 0 0;height:clamp(320px,40vw,480px);border-radius:20px;overflow:hidden;box-shadow:var(--sombra);background:var(--areia)}
+  .foto-ugc{aspect-ratio:var(--proporcao,9/16)}
+  .foto-ugc img{height:100%;width:100%;max-width:none;object-fit:cover;display:block}
+  .foto-ugc figcaption{position:absolute;left:12px;bottom:12px;background:rgba(244,240,232,.92);color:var(--cafe);font-size:.66rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:7px 12px;border-radius:999px}
+
   /* =========== BLACK FRIDAY =========== */
   .blackfriday{background-color:#0d0c0b;background-image:var(--grao);color:var(--cortina);overflow:hidden}
   .blackfriday::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background-color:#efe7da;background-image:var(--granilite,none);background-size:200px}
@@ -459,6 +469,9 @@
     .revelar{opacity:1;transform:none}
     .faixa-trilho{animation:none;flex-wrap:wrap;width:auto}
     .faixa ul[aria-hidden="true"]{display:none}
+    .carrossel{overflow-x:auto}
+    .carrossel-trilho{animation:none}
+    .foto-ugc[aria-hidden="true"]{display:none}
     .faixa ul{flex-wrap:wrap}
   }
 </style>
@@ -621,6 +634,20 @@
     </div>
     <div class="filtros revelar" id="filtros" role="group" aria-label="Filtrar trabalhos por nicho"></div>
     <div class="trabalhos-grid" id="trabalhos-grid" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ FOTOS UGC (faixa que rola sozinha; fotos no array "fotosUgc" do script) ============ -->
+<section class="fotos-ugc" id="fotos" aria-labelledby="titulo-fotos">
+  <div class="container">
+    <div class="cabeca revelar">
+      <span class="rotulo">Fotos</span>
+      <h2 id="titulo-fotos">Fotos <em>UGC</em></h2>
+      <p>O produto em uso de verdade, com luz natural e cenários reais.</p>
+    </div>
+  </div>
+  <div class="carrossel" aria-label="Fotos UGC">
+    <div class="carrossel-trilho" id="carrossel-trilho"></div>
   </div>
 </section>
 
@@ -846,7 +873,8 @@ const marcas = [
   { nome: "La San Day",      logo: "logos/la-san-day.png",       altura: 46 },
   { nome: "You-K! Foods",    logo: "logos/you-k.png",            altura: 58 },
   { nome: "Lackto",          logo: "logos/lackto.png",           altura: 96 },
-  { nome: "União Magistral", logo: "logos/uniao-magistral.png",  altura: 46 }
+  { nome: "União Magistral", logo: "logos/uniao-magistral.png",  altura: 46 },
+  { nome: "Nobugs",          logo: "logos/nobugs.webp",          altura: 74 }
 ];
 
 // Três números da capa.
@@ -924,6 +952,21 @@ const trabalhos = [
   { nicho: "Viagens",              marca: "Viagem",            titulo: "Motorhome em família",     youtube: "sRtfQi6Y7Dc", views: "" },
   { nicho: "Viagens",              marca: "Viagem",            titulo: "Israel",                   youtube: "p5a-evCUSO4", views: "" },
   { nicho: "Viagens",              marca: "Viagem",            titulo: "Dubai",                    youtube: "v03nWJMZQ9M", views: "" }
+];
+
+// Fotos UGC da faixa que rola sozinha, na ordem em que aparecem (pasta "fotos/ugc").
+// w e h: largura e altura da foto em pixels. legenda: texto pequeno em cima da foto (deixe "" para não mostrar). alt: descrição para leitores de tela.
+const fotosUgc = [
+  { imagem: "fotos/ugc/ugc-01.jpg", w: 675, h: 1200, legenda: "Lackto",                   alt: "Mãos de mãe e bebê segurando a joia de leite materno da Lackto" },
+  { imagem: "fotos/ugc/ugc-02.jpg", w: 675, h: 1200, legenda: "União Magistral",          alt: "Caroline sorrindo com duas caixas de Ômega Kids" },
+  { imagem: "fotos/ugc/ugc-03.jpg", w: 900, h: 1200, legenda: "Lackto",                   alt: "Caroline segurando o pingente de leite materno da Lackto" },
+  { imagem: "fotos/ugc/ugc-04.jpg", w: 680, h: 1200, legenda: "Vinagreen",                alt: "Caroline de roupão ao lado do lava roupas e do amaciante Vinagreen" },
+  { imagem: "fotos/ugc/ugc-05.jpg", w: 900, h: 1200, legenda: "Verdi Natural",            alt: "Kit relaxante Verdi Natural sobre uma manta branca" },
+  { imagem: "fotos/ugc/ugc-06.jpg", w: 675, h: 1200, legenda: "Fernanda Ferreira Aromas", alt: "Home spray Foco e Concentração na mão, com um livro aberto ao fundo" },
+  { imagem: "fotos/ugc/ugc-07.jpg", w: 900, h: 1200, legenda: "You-K! Foods",             alt: "Pacotes de Youkitas sobre uma mesinha perto da janela" },
+  { imagem: "fotos/ugc/ugc-08.jpg", w: 960, h: 1200, legenda: "Viagem",                   alt: "Caroline sentada em uma escadaria de pedra com palmeiras" },
+  { imagem: "fotos/ugc/ugc-09.jpg", w: 698, h: 1200, legenda: "Nobugs",                   alt: "Limpador perfumado Nobugs na luz da janela" },
+  { imagem: "fotos/ugc/ugc-10.jpg", w: 675, h: 1200, legenda: "Moda",                     alt: "Caroline de saia longa preta entre árvores" }
 ];
 
 // Serviços (seção "Como eu te ajudo")
@@ -1103,6 +1146,14 @@ filtrosEl.addEventListener("click", (e) => {
     if (mostra) { card.classList.add("visivel"); void card.offsetWidth; card.classList.add("aparecer"); }
   });
 });
+
+// Fotos UGC (repetidas para o movimento contínuo)
+const listaFotos = (oculto) => fotosUgc.map(f => `
+  <figure class="foto-ugc" style="--proporcao:${f.w}/${f.h}"${oculto ? ' aria-hidden="true"' : ""}>
+    <img src="${esc(f.imagem)}" alt="${oculto ? "" : esc(f.alt)}" width="${f.w}" height="${f.h}" decoding="async">
+    ${f.legenda ? `<figcaption>${esc(f.legenda)}</figcaption>` : ""}
+  </figure>`).join("");
+$("#carrossel-trilho").innerHTML = listaFotos(false) + listaFotos(true);
 
 // Serviços
 $("#servicos-grid").innerHTML = servicos.map((s, i) => `
