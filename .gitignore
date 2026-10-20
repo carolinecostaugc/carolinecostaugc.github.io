@@ -1,2 +1,5 @@
 # Pasta usada só para os testes locais, não vai para o site
 .claude/
+
+# Pasta temporária da conversão de vídeos
+videos/_novo/

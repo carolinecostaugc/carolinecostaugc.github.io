@@ -267,6 +267,11 @@
   .player-video{aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5)}
   .player-video iframe{width:100%;height:100%;border:0;display:block}
   .player-video video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
+  .player-video{position:relative}
+  .carregando{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:none;align-items:center;gap:10px;padding:10px 18px;border-radius:999px;background:rgba(31,28,25,.75);color:var(--cortina);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;pointer-events:none}
+  .carregando i{width:16px;height:16px;border-radius:50%;border:2px solid rgba(244,240,232,.35);border-top-color:var(--cortina);animation:girar .8s linear infinite}
+  .player-video.esperando .carregando{display:flex}
+  @keyframes girar{to{transform:rotate(360deg)}}
   .player-video.instagram{aspect-ratio:auto;height:min(calc(100vh - 120px),760px);background:#fff}
   .player-rodape{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--cortina)}
   .player-rodape p{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.15rem;line-height:1.2}
@@ -397,7 +402,9 @@
   .captura.aberta{opacity:1;visibility:visible}
   .captura-card{position:relative;width:100%;max-width:460px;max-height:calc(100vh - 32px);overflow:auto;border-radius:24px;background-color:var(--cortina);background-image:var(--linho);box-shadow:0 30px 80px rgba(0,0,0,.45);transform:translateY(20px);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
   .captura.aberta .captura-card{transform:none}
-  .captura-faixa{height:84px;background-color:#efe7da;background-image:var(--granilite,none);background-size:280px}
+  .captura-faixa{position:relative;height:84px;display:flex;align-items:center;padding:0 34px;background-color:#0d0c0b;background-image:var(--grao)}
+  .captura-faixa::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background-color:#efe7da;background-image:var(--granilite,none);background-size:200px}
+  .captura-faixa span{font-family:var(--serif);font-size:1.9rem;font-weight:600;color:var(--cortina);letter-spacing:-.01em}
   .captura-corpo{padding:30px 34px 32px}
   .captura-corpo h2{font-size:clamp(2rem,5vw,2.5rem);margin:12px 0 10px}
   .captura-corpo > p{color:var(--cafe-2);margin-bottom:22px;font-size:.95rem}
@@ -842,18 +849,18 @@
   </div>
 </div>
 
-<!-- ============ CARD DE CAPTURA (aparece após 7 segundos, uma vez por visita) ============ -->
+<!-- ============ CARD DE CAPTURA: ofertas da Black Friday (aparece após 7 segundos, uma vez por visita) ============ -->
 <div class="captura" id="captura" aria-hidden="true">
   <div class="captura-card" role="dialog" aria-modal="true" aria-labelledby="titulo-captura">
     <button class="fechar" id="fechar-captura" aria-label="Fechar">×</button>
-    <div class="captura-faixa" aria-hidden="true"></div>
+    <div class="captura-faixa" aria-hidden="true"><span>Black Friday</span></div>
     <div class="captura-corpo">
-      <span class="rotulo">Mídia kit</span>
-      <h2 id="titulo-captura">Quer meu mídia kit <em>completo?</em></h2>
-      <p>Deixe seu nome e e-mail que eu te envio formatos, cenários e resultados.</p>
+      <span class="rotulo">Pacotes exclusivos</span>
+      <h2 id="titulo-captura">Quer receber as ofertas de pacotes da <em>Black?</em></h2>
+      <p>Deixe seu nome e e-mail que eu te envio os pacotes da Black Friday, com preços que só vou liberar agora.</p>
       <form id="form-captura" novalidate>
-        <input type="hidden" name="_subject" value="Pedido de mídia kit pelo portfólio">
-        <input type="hidden" name="origem" value="Card do mídia kit">
+        <input type="hidden" name="_subject" value="Pedido de ofertas da Black Friday pelo portfólio">
+        <input type="hidden" name="origem" value="Card das ofertas da Black Friday">
         <input type="text" name="_gotcha" class="armadilha" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="campo">
           <label for="c-nome">Nome</label>
@@ -1111,7 +1118,7 @@ $("#trabalhos-grid").innerHTML = trabalhos.map((t, i) => {
   const capa = t.capa || (t.youtube ? `https://i.ytimg.com/vi/${t.youtube}/oardefault.jpg` : "");
   return `
   <a class="trabalho revelar" href="${arquivo ? "#trabalhos" : `https://www.youtube.com/shorts/${esc(t.youtube)}`}" role="button"
-     data-nicho="${esc(t.nicho)}" data-video="${esc(arquivo ? t.video : t.youtube)}" data-origem="${arquivo ? "arquivo" : "youtube"}"
+     data-nicho="${esc(t.nicho)}" data-video="${esc(arquivo ? t.video : t.youtube)}" data-origem="${arquivo ? "arquivo" : "youtube"}" data-capa="${esc(capa)}"
      data-titulo="${esc(t.marca)}: ${esc(t.titulo)}"
      aria-label="Assistir ao vídeo ${esc(t.titulo)} para ${esc(t.marca)}">
     <div class="midia ${gradientes[i % 5]}">
@@ -1127,14 +1134,27 @@ $("#trabalhos-grid").innerHTML = trabalhos.map((t, i) => {
 // Player: abre o vídeo (arquivo do site, YouTube ou Instagram) na própria página
 const player = $("#player"), playerVideo = $("#player-video"), playerLink = $("#player-link");
 let focoAntesPlayer = null;
-function abrirPlayer(id, titulo, origem = "youtube") {
+function abrirPlayer(id, titulo, origem = "youtube", capa = "") {
   focoAntesPlayer = document.activeElement;
   const codigo = encodeURIComponent(id);
   playerVideo.classList.toggle("instagram", origem === "instagram");
   if (origem === "arquivo") {
-    // vídeo do próprio site: sem botão de baixar, sem janelinha e sem menu do botão direito
-    playerVideo.innerHTML = `<video src="${esc(id)}" title="${esc(titulo)}" controls autoplay playsinline preload="auto"
-      controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture disableRemotePlayback></video>`;
+    // vídeo do próprio site: sem botão de baixar, sem janelinha e sem menu do botão direito.
+    // No celular (ou em internet lenta) usa a versão 720p, que carrega mais rápido; no computador, a 1080p.
+    const conexao = navigator.connection || {};
+    const leve = window.matchMedia("(max-width: 900px)").matches || conexao.saveData || /(^|-)(2g|3g)$/.test(conexao.effectiveType || "");
+    const arquivo = leve ? id.replace(/\.mp4$/, "-720.mp4") : id;
+    playerVideo.innerHTML = `<video src="${esc(arquivo)}" poster="${esc(capa || "")}" title="${esc(titulo)}" controls autoplay playsinline preload="auto"
+      controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture disableRemotePlayback></video>
+      <span class="carregando" aria-hidden="true"><i></i>Carregando</span>`;
+    const video = playerVideo.querySelector("video");
+    const pronto = () => playerVideo.classList.remove("esperando");
+    playerVideo.classList.add("esperando");
+    video.addEventListener("playing", pronto);
+    video.addEventListener("waiting", () => playerVideo.classList.add("esperando"));
+    video.addEventListener("pause", pronto);
+    // se a versão leve não existir, volta para a versão principal
+    video.addEventListener("error", () => { if (video.src.includes("-720.mp4")) video.src = id; }, { once: true });
     playerLink.hidden = true;
   } else {
     const embed = origem === "instagram"
@@ -1159,7 +1179,7 @@ $("#trabalhos-grid").addEventListener("click", (e) => {
   const card = e.target.closest(".trabalho");
   if (!card) return;
   e.preventDefault();
-  abrirPlayer(card.dataset.video, card.dataset.titulo, card.dataset.origem);
+  abrirPlayer(card.dataset.video, card.dataset.titulo, card.dataset.origem, card.dataset.capa);
 });
 // sem menu do botão direito nos vídeos (dificulta "salvar vídeo como")
 playerVideo.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -1364,8 +1384,8 @@ let focoAnterior = null;
 function lerSessao(chave) { try { return sessionStorage.getItem(chave); } catch (e) { return null; } }
 function gravarSessao(chave) { try { sessionStorage.setItem(chave, "1"); } catch (e) {} }
 function abrirCaptura() {
-  if (lerSessao("midiaKitVisto")) return;
-  gravarSessao("midiaKitVisto");
+  if (lerSessao("ofertasBlackVistas")) return;
+  gravarSessao("ofertasBlackVistas");
   focoAnterior = document.activeElement;
   captura.classList.add("aberta");
   captura.setAttribute("aria-hidden", "false");
@@ -1395,7 +1415,7 @@ $("#form-captura").addEventListener("submit", async (e) => {
   if (!f.checkValidity()) { f.reportValidity(); return; }
   const nome = f.nome.value.trim().split(" ")[0];
   if (!(await enviarFormulario(f, $("#captura-erro")))) return;
-  f.outerHTML = `<div class="confirmacao" role="status"><div class="ok" aria-hidden="true">✓</div><h3>Combinado, ${esc(nome)}!</h3><p>O mídia kit vai chegar no seu e-mail em breve.</p></div>`;
+  f.outerHTML = `<div class="confirmacao" role="status"><div class="ok" aria-hidden="true">✓</div><h3>Combinado, ${esc(nome)}!</h3><p>As ofertas da Black vão chegar no seu e-mail em breve.</p></div>`;
   setTimeout(fecharCaptura, 2600);
 });
 </script>
