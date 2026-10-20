@@ -248,6 +248,7 @@
   .player-caixa{position:relative;width:min(400px,100%,calc((100vh - 120px) * 9 / 16));display:grid;gap:12px}
   .player-video{aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5)}
   .player-video iframe{width:100%;height:100%;border:0;display:block}
+  .player-video video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
   .player-video.instagram{aspect-ratio:auto;height:min(calc(100vh - 120px),760px);background:#fff}
   .player-rodape{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--cortina)}
   .player-rodape p{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.15rem;line-height:1.2}
@@ -925,33 +926,38 @@ const destaques = [
 // Nichos que aparecem nos botões de filtro
 const nichos = ["Maternidade", "Alimentação saudável", "Autocuidado e beleza", "Casa e rotina", "Negócios e tech", "Viagens"];
 
-// Trabalhos da galeria: vídeos do YouTube (não listados). "nicho" precisa ser igual a um dos nomes acima.
-// youtube: o código do vídeo, que é a parte do link depois de "shorts/" e antes do "?".
-//   Exemplo: youtube.com/shorts/2y1m4het3-c?is=... vira "2y1m4het3-c".
-// A capa é puxada sozinha do YouTube. views: deixe "" se não quiser mostrar o número.
+// Trabalhos da galeria: vídeos guardados no próprio site, na pasta "videos" (capas em "videos/capas").
+// "nicho" precisa ser igual a um dos nomes acima.
+// video: arquivo .mp4 do vídeo. capa: imagem que aparece no card. views: deixe "" se não quiser mostrar o número.
+// youtube: use só quando o vídeo não estiver na pasta (o código do link, depois de "shorts/" e antes do "?").
 // Para incluir um vídeo novo, copie uma linha, troque os dados e salve.
 const trabalhos = [
-  { nicho: "Maternidade",          marca: "Lackto",            titulo: "Joia de leite materno",    youtube: "WW9eJ50Q5Sc", views: "" },
-  { nicho: "Maternidade",          marca: "Verdi Natural",     titulo: "Kit Xô Gripe",             youtube: "f3-A2grFjQA", views: "" },
-  { nicho: "Maternidade",          marca: "Verdi Natural",     titulo: "Kit Sono",                 youtube: "fPQ_hH29Xdk", views: "" },
-  { nicho: "Maternidade",          marca: "Letut",             titulo: "Roupa infantil",           youtube: "xOokxxediGo", views: "" },
-  { nicho: "Alimentação saudável", marca: "You-K! Foods",      titulo: "Mix de brownie",           youtube: "YLQW65UTgAk", views: "" },
-  { nicho: "Alimentação saudável", marca: "You-K! Foods",      titulo: "Pão sem glúten",           youtube: "VrJ5Q2O5lxo", views: "" },
-  { nicho: "Alimentação saudável", marca: "You-K! Foods",      titulo: "Snack saudável",           youtube: "U_ZUKe-u2DM", views: "" },
-  { nicho: "Autocuidado e beleza", marca: "La San Day",        titulo: "Kit Ragazza",              youtube: "AulzA15fq-U", views: "" },
-  { nicho: "Autocuidado e beleza", marca: "La San Day",        titulo: "Body splash, creme e sabonete", youtube: "PEoXZnxzOz4", views: "" },
-  { nicho: "Autocuidado e beleza", marca: "La San Day",        titulo: "Creme de ureia 10%",       youtube: "LL0sg1ELPMc", views: "" },
-  { nicho: "Autocuidado e beleza", marca: "Dentista Juliana",  titulo: "Consultório odontológico", youtube: "Z2Goi_D4Vts", views: "" },
-  { nicho: "Casa e rotina",        marca: "Vinagreen",         titulo: "Kit coco",                 youtube: "QulejI99q0M", views: "" },
-  { nicho: "Casa e rotina",        marca: "Vinagreen",         titulo: "Sabão e amaciante",        youtube: "1q0BTmaSvOw", views: "" },
-  { nicho: "Casa e rotina",        marca: "Nobugs",            titulo: "Limpador perfumado",       youtube: "D17RURDJGjI", views: "" },
-  { nicho: "Negócios e tech",      marca: "Yelly",             titulo: "App de pagamentos",        youtube: "I0CT-jt4JpU", views: "+48 mil views" },
-  { nicho: "Negócios e tech",      marca: "Noroeste Solar",    titulo: "Energia solar na conta de luz", youtube: "2y1m4het3-c", views: "" },
-  { nicho: "Negócios e tech",      marca: "Negócios Essenciais", titulo: "Mentoria de comunicação", youtube: "MT5JdlG90iA", views: "" },
-  { nicho: "Viagens",              marca: "Viagem",            titulo: "Holambra, Cidade das Flores", youtube: "TlM4yjEuAxU", views: "" },
-  { nicho: "Viagens",              marca: "Viagem",            titulo: "Motorhome em família",     youtube: "sRtfQi6Y7Dc", views: "" },
-  { nicho: "Viagens",              marca: "Viagem",            titulo: "Israel",                   youtube: "p5a-evCUSO4", views: "" },
-  { nicho: "Viagens",              marca: "Viagem",            titulo: "Dubai",                    youtube: "v03nWJMZQ9M", views: "" }
+  { nicho: "Maternidade",          marca: "Lackto",              titulo: "Joia de leite materno",          video: "videos/lackto.mp4",                    capa: "videos/capas/lackto.jpg",                    views: "" },
+  { nicho: "Maternidade",          marca: "Verdi Natural",       titulo: "Kit Xô Gripe",                   video: "videos/verdi-kit-xo-gripe.mp4",        capa: "videos/capas/verdi-kit-xo-gripe.jpg",        views: "" },
+  { nicho: "Maternidade",          marca: "Verdi Natural",       titulo: "Kit Sono",                       video: "videos/verdi-kit-sono.mp4",            capa: "videos/capas/verdi-kit-sono.jpg",            views: "" },
+  { nicho: "Maternidade",          marca: "Letut",               titulo: "Roupa infantil",                 video: "videos/letut.mp4",                     capa: "videos/capas/letut.jpg",                     views: "" },
+  { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Mix de brownie",                 video: "videos/youk-brownie.mp4",              capa: "videos/capas/youk-brownie.jpg",              views: "" },
+  { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Pão sem glúten",                 video: "videos/youk-pao.mp4",                  capa: "videos/capas/youk-pao.jpg",                  views: "" },
+  { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Snack saudável",                 video: "videos/youk-snack-saudavel.mp4",       capa: "videos/capas/youk-snack-saudavel.jpg",       views: "" },
+  { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Experiência Youkitas",           video: "videos/youk-snack.mp4",                capa: "videos/capas/youk-snack.jpg",                views: "" },
+  { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Sabores Youkitas",               video: "videos/youk-foods.mp4",                capa: "videos/capas/youk-foods.jpg",                views: "" },
+  { nicho: "Autocuidado e beleza", marca: "La San Day",          titulo: "Kit Ragazza",                    video: "videos/la-san-day-kit-ragazza.mp4",    capa: "videos/capas/la-san-day-kit-ragazza.jpg",    views: "" },
+  { nicho: "Autocuidado e beleza", marca: "La San Day",          titulo: "Body splash, creme e sabonete",  video: "videos/la-san-day-body-splash.mp4",    capa: "videos/capas/la-san-day-body-splash.jpg",    views: "" },
+  { nicho: "Autocuidado e beleza", marca: "La San Day",          titulo: "Creme de ureia 10%",             video: "videos/la-san-day-creme-ureia.mp4",    capa: "videos/capas/la-san-day-creme-ureia.jpg",    views: "" },
+  { nicho: "Autocuidado e beleza", marca: "La San Day",          titulo: "Rotina de autocuidado",          video: "videos/la-san-day.mp4",                capa: "videos/capas/la-san-day.jpg",                views: "" },
+  { nicho: "Autocuidado e beleza", marca: "Oceane",              titulo: "Kit para cabelos",               video: "videos/oceane.mp4",                    capa: "videos/capas/oceane.jpg",                    views: "" },
+  { nicho: "Autocuidado e beleza", marca: "Dentista Juliana",    titulo: "Consultório odontológico",       video: "videos/dentista-juliana.mp4",          capa: "videos/capas/dentista-juliana.jpg",          views: "" },
+  { nicho: "Casa e rotina",        marca: "Vinagreen",           titulo: "Kit coco",                       video: "videos/vinagreen-kit-coco.mp4",        capa: "videos/capas/vinagreen-kit-coco.jpg",        views: "" },
+  { nicho: "Casa e rotina",        marca: "Vinagreen",           titulo: "Sabão e amaciante",              video: "videos/vinagreen-sabao-amaciante.mp4", capa: "videos/capas/vinagreen-sabao-amaciante.jpg", views: "" },
+  { nicho: "Casa e rotina",        marca: "Nobugs",              titulo: "Limpador perfumado",             video: "videos/nobugs.mp4",                    capa: "videos/capas/nobugs.jpg",                    views: "" },
+  { nicho: "Casa e rotina",        marca: "Bravatti",            titulo: "Jogo de panelas de cerâmica",    video: "videos/bravatti.mp4",                  capa: "videos/capas/bravatti.jpg",                  views: "" },
+  { nicho: "Negócios e tech",      marca: "Yelly",               titulo: "App de pagamentos",              video: "videos/yelly.mp4",                     capa: "videos/capas/yelly.jpg",                     views: "+48 mil views" },
+  { nicho: "Negócios e tech",      marca: "Noroeste Solar",      titulo: "Energia solar na conta de luz",  video: "videos/noroeste-solar.mp4",            capa: "videos/capas/noroeste-solar.jpg",            views: "" },
+  { nicho: "Negócios e tech",      marca: "Negócios Essenciais", titulo: "Mentoria de comunicação",        youtube: "MT5JdlG90iA",                                                                            views: "" },
+  { nicho: "Viagens",              marca: "Viagem",              titulo: "Holambra, Cidade das Flores",    video: "videos/holambra.mp4",                  capa: "videos/capas/holambra.jpg",                  views: "" },
+  { nicho: "Viagens",              marca: "Viagem",              titulo: "Motorhome em família",           video: "videos/motorhome.mp4",                 capa: "videos/capas/motorhome.jpg",                 views: "" },
+  { nicho: "Viagens",              marca: "Viagem",              titulo: "Israel",                         video: "videos/israel.mp4",                    capa: "videos/capas/israel.jpg",                    views: "" },
+  { nicho: "Viagens",              marca: "Viagem",              titulo: "Dubai",                          video: "videos/dubai.mp4",                     capa: "videos/capas/dubai.jpg",                     views: "" }
 ];
 
 // Fotos UGC da faixa que rola sozinha, na ordem em que aparecem (pasta "fotos/ugc").
@@ -1082,33 +1088,45 @@ $("#destaques-grid").innerHTML = destaques.map((d, i) => `
 const filtrosEl = $("#filtros");
 filtrosEl.innerHTML = ["Todos", ...nichos].map((n, i) =>
   `<button class="filtro" type="button" data-nicho="${esc(n)}" aria-pressed="${i === 0}">${esc(n)}</button>`).join("");
-$("#trabalhos-grid").innerHTML = trabalhos.map((t, i) => `
-  <a class="trabalho revelar" href="https://www.youtube.com/shorts/${esc(t.youtube)}" target="_blank" rel="noopener"
-     data-nicho="${esc(t.nicho)}" data-video="${esc(t.youtube)}" data-titulo="${esc(t.marca)}: ${esc(t.titulo)}"
+$("#trabalhos-grid").innerHTML = trabalhos.map((t, i) => {
+  const arquivo = !!t.video;
+  const capa = t.capa || (t.youtube ? `https://i.ytimg.com/vi/${t.youtube}/oardefault.jpg` : "");
+  return `
+  <a class="trabalho revelar" href="${arquivo ? "#trabalhos" : `https://www.youtube.com/shorts/${esc(t.youtube)}`}" role="button"
+     data-nicho="${esc(t.nicho)}" data-video="${esc(arquivo ? t.video : t.youtube)}" data-origem="${arquivo ? "arquivo" : "youtube"}"
+     data-titulo="${esc(t.marca)}: ${esc(t.titulo)}"
      aria-label="Assistir ao vídeo ${esc(t.titulo)} para ${esc(t.marca)}">
     <div class="midia ${gradientes[i % 5]}">
-      <img src="https://i.ytimg.com/vi/${esc(t.youtube)}/oardefault.jpg" alt="" loading="lazy" decoding="async"
-           onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${esc(t.youtube)}/hqdefault.jpg'">
+      ${capa ? `<img src="${esc(capa)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : ""}
       ${t.views ? `<span class="views">${esc(t.views)}</span>` : ""}
       <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
     </div>
     <span class="nicho">${esc(t.marca)}</span>
     <h3>${esc(t.titulo)}</h3>
-  </a>`).join("");
+  </a>`;
+}).join("");
 
-// Player: abre o vídeo do YouTube ou do Instagram na própria página
+// Player: abre o vídeo (arquivo do site, YouTube ou Instagram) na própria página
 const player = $("#player"), playerVideo = $("#player-video"), playerLink = $("#player-link");
 let focoAntesPlayer = null;
 function abrirPlayer(id, titulo, origem = "youtube") {
   focoAntesPlayer = document.activeElement;
   const codigo = encodeURIComponent(id);
-  const embed = origem === "instagram"
-    ? `https://www.instagram.com/reel/${codigo}/embed/`
-    : `https://www.youtube-nocookie.com/embed/${codigo}?autoplay=1&rel=0&playsinline=1`;
   playerVideo.classList.toggle("instagram", origem === "instagram");
-  playerVideo.innerHTML = `<iframe src="${embed}" title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  playerLink.href = origem === "instagram" ? `https://www.instagram.com/reel/${codigo}/` : `https://www.youtube.com/shorts/${codigo}`;
-  playerLink.textContent = origem === "instagram" ? "Abrir no Instagram" : "Abrir no YouTube";
+  if (origem === "arquivo") {
+    // vídeo do próprio site: sem botão de baixar, sem janelinha e sem menu do botão direito
+    playerVideo.innerHTML = `<video src="${esc(id)}" title="${esc(titulo)}" controls autoplay playsinline preload="auto"
+      controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture disableRemotePlayback></video>`;
+    playerLink.hidden = true;
+  } else {
+    const embed = origem === "instagram"
+      ? `https://www.instagram.com/reel/${codigo}/embed/`
+      : `https://www.youtube-nocookie.com/embed/${codigo}?autoplay=1&rel=0&playsinline=1`;
+    playerVideo.innerHTML = `<iframe src="${embed}" title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    playerLink.hidden = false;
+    playerLink.href = origem === "instagram" ? `https://www.instagram.com/reel/${codigo}/` : `https://www.youtube.com/shorts/${codigo}`;
+    playerLink.textContent = origem === "instagram" ? "Abrir no Instagram" : "Abrir no YouTube";
+  }
   $("#player-titulo").textContent = titulo;
   player.classList.add("aberta"); player.setAttribute("aria-hidden", "false");
   $("#fechar-player").focus();
@@ -1123,8 +1141,10 @@ $("#trabalhos-grid").addEventListener("click", (e) => {
   const card = e.target.closest(".trabalho");
   if (!card) return;
   e.preventDefault();
-  abrirPlayer(card.dataset.video, card.dataset.titulo);
+  abrirPlayer(card.dataset.video, card.dataset.titulo, card.dataset.origem);
 });
+// sem menu do botão direito nos vídeos (dificulta "salvar vídeo como")
+playerVideo.addEventListener("contextmenu", (e) => e.preventDefault());
 $("#destaques-grid").addEventListener("click", (e) => {
   const card = e.target.closest(".video-card");
   if (!card) return;
