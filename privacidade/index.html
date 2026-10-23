@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de Privacidade | Caroline Costa</title>
+<meta name="description" content="Política de Privacidade da automação de mensagens e comentários no Instagram de Caroline Costa (@caroline_costa): quais dados são tratados, por que, por quanto tempo e como pedir a exclusão, conforme a LGPD.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://carolinecostaugc.github.io/privacidade/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300..600&display=swap" rel="stylesheet">
+<style>
+  /* Mesma identidade visual do portfólio */
+  :root{
+    --cortina:#f4f0e8; --cortina-2:#ece4d7; --areia:#d8c8ae;
+    --oliva:#5c6450; --oliva-parede:#474e3d; --carvalho:#8a6244; --terracota:#b8633a;
+    --cafe:#1f1c19; --cafe-2:#4a423a; --linha:rgba(31,28,25,.13);
+    --serif:"Cormorant Garamond","Cormorant",Georgia,"Times New Roman",serif;
+    --sans:"Jost",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --leitura:720px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--cortina);color:var(--cafe);font-family:var(--sans);font-weight:400;font-size:1.0625rem;line-height:1.7}
+  a{color:var(--oliva-parede);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  a:hover{color:var(--carvalho)}
+  a:focus-visible{outline:2px solid var(--terracota);outline-offset:3px;border-radius:2px}
+  .pular{position:absolute;left:-9999px;top:8px;background:var(--cafe);color:var(--cortina);padding:10px 14px;border-radius:8px;z-index:10}
+  .pular:focus{left:16px}
+  .container{width:100%;max-width:var(--leitura);margin:0 auto;padding:0 20px}
+
+  /* Topo */
+  .topo{border-bottom:1px solid var(--linha);background:rgba(244,240,232,.94)}
+  .topo .container{max-width:1180px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+  .marca-nome{font-family:var(--serif);font-weight:500;font-size:1.45rem;text-decoration:none;color:var(--cafe);display:flex;align-items:center;gap:10px;line-height:1}
+  .marca-nome em{font-style:italic;color:var(--oliva)}
+  .voltar{font-size:.92rem;white-space:nowrap}
+  .logo-marca{width:44px;height:37px;flex:none}
+  .logo-marca .corpo{fill:none;stroke:var(--cafe);stroke-width:1.6;stroke-linejoin:round}
+  .logo-marca .rec{fill:var(--terracota)}
+  .logo-marca .comedia{fill:var(--oliva)}
+  .logo-marca .tragedia{fill:var(--carvalho)}
+  .logo-marca .rosto{fill:none;stroke:var(--cortina);stroke-width:1.1;stroke-linecap:round}
+
+  /* Conteúdo */
+  main{padding:56px 0 72px}
+  .sobretitulo{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--oliva);font-weight:500;margin:0 0 10px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.4rem,7vw,3.4rem);line-height:1.05;margin:0 0 14px}
+  .atualizacao{color:var(--cafe-2);font-size:.95rem;margin:0 0 28px}
+  h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.55rem,4.2vw,1.9rem);line-height:1.2;margin:0 0 12px;scroll-margin-top:24px}
+  h3{font-size:1.02rem;font-weight:600;margin:20px 0 6px}
+  p{margin:0 0 14px}
+  ul{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  li::marker{color:var(--terracota)}
+  strong{font-weight:600}
+  section{padding:30px 0;border-top:1px solid var(--linha)}
+  .intro{font-size:1.12rem}
+  .indice{background:var(--cortina-2);border-radius:18px;padding:22px 24px;margin:8px 0 34px}
+  .indice h2{font-size:1.35rem;margin-bottom:8px}
+  .indice ol{margin:0;padding-left:22px;columns:2;column-gap:28px}
+  .indice li{break-inside:avoid;font-size:.97rem}
+  .destaque{background:#fff;border:1px solid var(--linha);border-left:4px solid var(--oliva);border-radius:12px;padding:18px 20px;margin:14px 0}
+  .destaque p:last-child{margin-bottom:0}
+  .tabela-wrap{overflow-x:auto;margin:0 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:.97rem;background:#fff;border-radius:12px;overflow:hidden}
+  caption{text-align:left;font-size:.9rem;color:var(--cafe-2);padding-bottom:8px}
+  th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--linha)}
+  th{font-weight:600;background:var(--cortina-2)}
+  tr:last-child td{border-bottom:0}
+
+  /* Rodapé */
+  .rodape{background:var(--cafe);color:var(--cortina);padding:44px 0 36px;font-size:.93rem}
+  .rodape a{color:var(--cortina)}
+  .rodape a:hover{color:var(--areia)}
+  .rodape p{margin:0 0 10px;color:#e6dfd3}
+  .rodape .base{margin-top:18px;padding-top:16px;border-top:1px solid rgba(244,240,232,.18);color:#cfc6b8;font-size:.86rem}
+
+  @media (max-width:600px){
+    body{font-size:1rem}
+    main{padding:36px 0 56px}
+    .indice ol{columns:1}
+    .indice{padding:18px 18px}
+    .marca-nome{font-size:1.25rem}
+    .logo-marca{width:38px;height:32px}
+  }
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <div class="container">
+    <a href="../" class="marca-nome" aria-label="Caroline Costa, ir para o portfólio">
+      <svg class="logo-marca" viewBox="0 0 48 40" aria-hidden="true">
+        <rect class="corpo" x="1.5" y="7" width="33" height="26" rx="6"/>
+        <path class="corpo" d="M34.5 16.5 46 10.5v19l-11.5-6"/>
+        <circle class="rec" cx="7" cy="11.8" r="1.7"/>
+        <g transform="translate(5.5 13.5)">
+          <path class="comedia" d="M0 .6Q5.5-1 11 .6 11.6 8.6 5.5 13 -.6 8.6 0 .6Z"/>
+          <path class="rosto" d="M2.3 4.6q1.3-1.6 2.6 0M6.1 4.6q1.3-1.6 2.6 0M2.8 8.1q2.7 3.2 5.4 0"/>
+        </g>
+        <g transform="translate(19 14.5) rotate(9 5.5 6.5)">
+          <path class="tragedia" d="M0 .6Q5.5-1 11 .6 11.6 8.6 5.5 13 -.6 8.6 0 .6Z"/>
+          <path class="rosto" d="M2.3 3.6q1.3 1.6 2.6 0M6.1 3.6q1.3 1.6 2.6 0M2.8 10.4q2.7-3.2 5.4 0"/>
+        </g>
+      </svg>
+      <span>Caroline <em>Costa</em></span>
+    </a>
+    <a href="../" class="voltar">Voltar ao portfólio</a>
+  </div>
+</header>
+
+<main id="conteudo">
+  <div class="container">
+    <p class="sobretitulo">Privacidade e LGPD</p>
+    <h1>Política de Privacidade</h1>
+    <p class="atualizacao">Última atualização: <time datetime="2026-10-23">23 de outubro de 2026</time></p>
+
+    <p class="intro">Esta política explica, de forma simples, quais dados pessoais são tratados pela minha automação de mensagens e comentários no Instagram, por que isso acontece, por quanto tempo os dados ficam guardados e como você pode exercer os seus direitos previstos na Lei Geral de Proteção de Dados (Lei nº 13.709/2018, a LGPD).</p>
+
+    <nav class="indice" aria-labelledby="indice-titulo">
+      <h2 id="indice-titulo">Nesta página</h2>
+      <ol>
+        <li><a href="#quem-somos">Quem somos</a></li>
+        <li><a href="#dados-coletados">Dados que coletamos</a></li>
+        <li><a href="#uso-dos-dados">Como e por que usamos</a></li>
+        <li><a href="#compartilhamento">Compartilhamento e operadores</a></li>
+        <li><a href="#transferencia-internacional">Transferência internacional</a></li>
+        <li><a href="#retencao">Retenção e exclusão</a></li>
+        <li><a href="#seguranca">Segurança</a></li>
+        <li><a href="#direitos">Seus direitos</a></li>
+        <li><a href="#exclusao-de-dados">Como pedir a exclusão</a></li>
+        <li><a href="#menores">Dados de menores</a></li>
+        <li><a href="#alteracoes">Alterações nesta política</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ol>
+    </nav>
+
+    <section id="quem-somos" aria-labelledby="t-quem-somos">
+      <h2 id="t-quem-somos">1. Quem somos</h2>
+      <p>A responsável pelo tratamento dos dados (controladora, nos termos da LGPD) é <strong>Caroline Costa</strong>, criadora de conteúdo no Instagram como <a href="https://www.instagram.com/caroline_costa/" rel="noopener">@caroline_costa</a>, com sede em Balneário Piçarras, Santa Catarina, Brasil.</p>
+      <p>Eu uso uma automação própria que responde a <strong>comentários</strong> nas minhas publicações e a <strong>mensagens diretas</strong> enviadas para a minha conta. Ela funciona exclusivamente pela <strong>API oficial do Instagram</strong>, fornecida pela Meta, e só age dentro da minha própria conta.</p>
+    </section>
+
+    <section id="dados-coletados" aria-labelledby="t-dados">
+      <h2 id="t-dados">2. Dados que coletamos</h2>
+      <p>Quando você comenta em uma publicação minha ou me envia uma mensagem, a automação pode tratar:</p>
+      <ul>
+        <li><strong>Identificação no Instagram:</strong> o seu nome de usuário (@) e o número de identificação que o Instagram atribui à sua conta nas interações comigo.</li>
+        <li><strong>Conteúdo da interação:</strong> o texto do comentário ou da mensagem que você enviou. Ele é lido apenas para identificar a palavra-chave que dispara a resposta e <strong>não fica armazenado</strong>.</li>
+        <li><strong>Contexto da interação:</strong> qual palavra-chave ou automação foi acionada, a origem (comentário, mensagem direta ou resposta a story), a etapa da conversa em que você está e os botões em que você tocou.</li>
+        <li><strong>Registro de envios:</strong> data, hora e situação (enviado, em fila ou com erro) de cada mensagem que a automação enviou para você.</li>
+        <li><strong>E-mail e telefone:</strong> somente se você decidir informá-los durante uma conversa, quando eu pedir esse dado (por exemplo, para enviar um material). Informar é opcional.</li>
+      </ul>
+      <div class="destaque">
+        <p><strong>O que NÃO coletamos:</strong> não coletamos senhas, não coletamos dados de pagamento ou bancários, não verificamos se você me segue e não temos acesso às suas conversas com outras pessoas. A automação só enxerga as interações feitas diretamente com a minha conta.</p>
+      </div>
+    </section>
+
+    <section id="uso-dos-dados" aria-labelledby="t-uso">
+      <h2 id="t-uso">3. Como e por que usamos os dados</h2>
+      <p>Os dados são usados apenas para:</p>
+      <ul>
+        <li>responder ao seu comentário ou mensagem e enviar o conteúdo, link ou material que você pediu;</li>
+        <li>continuar a conversa quando você toca em um botão, levando você à etapa seguinte;</li>
+        <li>enviar o material prometido ao e-mail ou telefone que você informou, quando for o caso;</li>
+        <li>evitar mensagens repetidas (a automação envia no máximo uma resposta automática por pessoa a cada 24 horas por comentário) e controlar o volume de envios para respeitar os limites do Instagram;</li>
+        <li>manter registros mínimos para segurança e para corrigir falhas.</li>
+      </ul>
+      <div class="destaque">
+        <p><strong>Só respondo quem falou comigo primeiro.</strong> A automação nunca envia mensagens para quem nunca interagiu com a minha conta, não faz disparos em massa e não usa listas compradas. Toda mensagem é uma resposta a um comentário ou mensagem que você enviou.</p>
+      </div>
+      <h3>Bases legais (art. 7º da LGPD)</h3>
+      <ul>
+        <li><strong>Atendimento ao seu pedido</strong> (inciso V) e <strong>legítimo interesse</strong> (inciso IX): para responder à sua interação e entregar o que você solicitou ao comentar ou enviar a mensagem.</li>
+        <li><strong>Consentimento</strong> (inciso I): para o e-mail e o telefone que você escolher informar. Você pode revogar esse consentimento a qualquer momento.</li>
+        <li><strong>Legítimo interesse</strong> (inciso IX): para os registros de envio, a prevenção de mensagens repetidas e a segurança do sistema, sempre respeitando os seus direitos e expectativas.</li>
+      </ul>
+    </section>
+
+    <section id="compartilhamento" aria-labelledby="t-compartilhamento">
+      <h2 id="t-compartilhamento">4. Compartilhamento e operadores</h2>
+      <p>Para a automação funcionar, alguns fornecedores tratam dados em meu nome ou participam da comunicação:</p>
+      <div class="tabela-wrap">
+        <table>
+          <caption>Terceiros envolvidos e a finalidade de cada um</caption>
+          <thead><tr><th scope="col">Empresa</th><th scope="col">Para que serve</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Meta Platforms</strong> (Instagram)</td><td>É a plataforma onde a conversa acontece. Entrega os comentários e mensagens à automação e envia as respostas pela API oficial. A Meta também trata os seus dados de acordo com a <a href="https://privacycenter.instagram.com/policy" rel="noopener">Política de Privacidade do Instagram</a>.</td></tr>
+            <tr><td><strong>Supabase</strong></td><td>Banco de dados e servidores onde a automação roda e onde ficam guardados os dados descritos na seção 2.</td></tr>
+            <tr><td><strong>GitHub</strong></td><td>Hospeda esta página e o painel de administração. Não recebe os dados da automação, mas pode registrar dados técnicos de acesso (como o endereço IP) de quem visita as páginas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Não vendo, não alugo e não cedo os seus dados</strong>, e não os uso para publicidade ou marketing de terceiros. Os dados também podem ser fornecidos a autoridades quando houver obrigação legal ou ordem judicial.</p>
+    </section>
+
+    <section id="transferencia-internacional" aria-labelledby="t-transferencia">
+      <h2 id="t-transferencia">5. Transferência internacional de dados</h2>
+      <p>O banco de dados da automação fica em servidores localizados em <strong>São Paulo, Brasil</strong>. Ainda assim, pode haver transferência internacional de dados, porque:</p>
+      <ul>
+        <li>a Meta processa os comentários e mensagens do Instagram em servidores próprios, inclusive nos Estados Unidos e em outros países;</li>
+        <li>Supabase e GitHub são empresas sediadas nos Estados Unidos e podem acessar dados técnicos para operar e dar suporte aos seus serviços.</li>
+      </ul>
+      <p>Essas transferências seguem o art. 33 da LGPD e se apoiam nas garantias contratuais e nas medidas de proteção adotadas por esses fornecedores.</p>
+    </section>
+
+    <section id="retencao" aria-labelledby="t-retencao">
+      <h2 id="t-retencao">6. Retenção e exclusão</h2>
+      <ul>
+        <li>Os dados ficam guardados enquanto a automação estiver ativa e forem necessários para as finalidades desta política.</li>
+        <li>Os dados de quem passa <strong>12 meses sem interagir</strong> comigo, assim como os registros de envio com mais de 12 meses, são <strong>apagados automaticamente</strong>.</li>
+        <li>Controles técnicos internos (como a fila de envios) são apagados após 30 dias.</li>
+        <li>Você pode pedir a exclusão a qualquer momento, sem precisar esperar esses prazos. Veja a seção <a href="#exclusao-de-dados">Como pedir a exclusão dos seus dados</a>.</li>
+      </ul>
+    </section>
+
+    <section id="seguranca" aria-labelledby="t-seguranca">
+      <h2 id="t-seguranca">7. Segurança</h2>
+      <p>Adoto medidas técnicas e administrativas razoáveis para proteger os seus dados, entre elas:</p>
+      <ul>
+        <li>conexões criptografadas (HTTPS) em toda a comunicação;</li>
+        <li>banco de dados com regras de acesso que bloqueiam qualquer pessoa não autorizada;</li>
+        <li>acesso ao painel restrito a mim, com login e senha;</li>
+        <li>chaves e credenciais guardadas apenas no servidor, nunca em páginas públicas;</li>
+        <li>coleta do mínimo de dados necessário.</li>
+      </ul>
+      <p>Nenhum sistema é totalmente imune a falhas. Se ocorrer um incidente de segurança que possa trazer risco ou dano relevante a você, comunicarei você e a Autoridade Nacional de Proteção de Dados (ANPD), como determina a LGPD.</p>
+    </section>
+
+    <section id="direitos" aria-labelledby="t-direitos">
+      <h2 id="t-direitos">8. Seus direitos como titular (art. 18 da LGPD)</h2>
+      <p>Você pode, a qualquer momento e gratuitamente, pedir:</p>
+      <ul>
+        <li>confirmação de que trato dados seus e <strong>acesso</strong> a eles;</li>
+        <li><strong>correção</strong> de dados incompletos, inexatos ou desatualizados;</li>
+        <li>anonimização, bloqueio ou <strong>exclusão</strong> de dados desnecessários, excessivos ou tratados em desacordo com a LGPD;</li>
+        <li><strong>portabilidade</strong> dos seus dados;</li>
+        <li>exclusão dos dados tratados com base no seu consentimento;</li>
+        <li>informação sobre com quem os seus dados foram compartilhados;</li>
+        <li>informação sobre a possibilidade de não fornecer consentimento e suas consequências;</li>
+        <li><strong>revogação do consentimento</strong>;</li>
+        <li>oposição a um tratamento que descumpra a LGPD.</li>
+      </ul>
+      <p>Para exercer qualquer desses direitos, escreva para <a href="mailto:carolinecostaugc@gmail.com">carolinecostaugc@gmail.com</a>. Respondo em até 15 dias. Você também pode apresentar reclamação à <a href="https://www.gov.br/anpd/" rel="noopener">ANPD</a>.</p>
+    </section>
+
+    <section id="exclusao-de-dados" aria-labelledby="t-exclusao">
+      <h2 id="t-exclusao">9. Como pedir a exclusão dos seus dados</h2>
+      <p>Para apagar os dados que a automação guardou sobre você:</p>
+      <ol>
+        <li>Envie um e-mail para <a href="mailto:carolinecostaugc@gmail.com?subject=Exclus%C3%A3o%20de%20dados">carolinecostaugc@gmail.com</a> com o assunto <strong>"Exclusão de dados"</strong>.</li>
+        <li>Informe o seu <strong>@ do Instagram</strong>, para que eu localize os registros.</li>
+        <li>Em até <strong>15 dias</strong>, todos os seus dados serão apagados do banco da automação (identificação, contexto das conversas, registros de envio, e-mail e telefone) e você receberá a confirmação por e-mail.</li>
+      </ol>
+      <p>Observações: se você voltar a comentar ou enviar mensagem depois da exclusão, a automação tratará os novos dados normalmente. As mensagens que já estão na sua caixa de entrada do Instagram e os dados que a própria Meta guarda são gerenciados por você nas configurações do Instagram, conforme a política da Meta.</p>
+    </section>
+
+    <section id="menores" aria-labelledby="t-menores">
+      <h2 id="t-menores">10. Dados de menores</h2>
+      <p>A automação é destinada exclusivamente a <strong>maiores de 18 anos</strong>. Não coleto intencionalmente dados de crianças ou adolescentes. Se eu souber que dados de uma pessoa menor de 18 anos foram tratados, eles serão apagados. Se você é responsável por um menor e acredita que isso aconteceu, entre em contato pelo e-mail abaixo.</p>
+    </section>
+
+    <section id="alteracoes" aria-labelledby="t-alteracoes">
+      <h2 id="t-alteracoes">11. Alterações nesta política</h2>
+      <p>Esta política pode ser atualizada para refletir mudanças na automação, na lei ou nas regras da Meta. A versão vigente estará sempre nesta página, com a data da última atualização no topo. Mudanças importantes serão destacadas aqui.</p>
+    </section>
+
+    <section id="contato" aria-labelledby="t-contato">
+      <h2 id="t-contato">12. Contato</h2>
+      <p>Dúvidas, pedidos ou reclamações sobre privacidade e proteção de dados (canal de comunicação com o titular, art. 41 da LGPD):</p>
+      <p><strong>Caroline Costa</strong><br>
+      E-mail: <a href="mailto:carolinecostaugc@gmail.com">carolinecostaugc@gmail.com</a><br>
+      Instagram: <a href="https://www.instagram.com/caroline_costa/" rel="noopener">@caroline_costa</a><br>
+      Balneário Piçarras, SC, Brasil</p>
+    </section>
+  </div>
+</main>
+
+<footer class="rodape">
+  <div class="container">
+    <p>Esta automação utiliza a Plataforma da Meta (API oficial do Instagram) e segue os <a href="https://developers.facebook.com/terms/" rel="noopener">Termos da Plataforma Meta</a> e as <a href="https://developers.facebook.com/devpolicy/" rel="noopener">Políticas do Desenvolvedor da Meta</a>. Ela não é afiliada, patrocinada nem endossada pela Meta. Instagram é uma marca da Meta Platforms, Inc.</p>
+    <div class="base">© 2026 Caroline Costa. UGC Creator, Balneário Piçarras, SC.</div>
+  </div>
+</footer>
+</body>
+</html>
