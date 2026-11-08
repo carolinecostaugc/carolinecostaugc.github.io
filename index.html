@@ -198,7 +198,11 @@
   .g5{background:linear-gradient(165deg,#f1ebe1 0%,#dccfb8 55%,#a8ad96 120%)}
 
   /* =========== 2. SOBRE =========== */
+  #sobre{padding-bottom:calc(var(--respiro) * .45)}
+  #sobre + section{padding-top:calc(var(--respiro) * .55)}
   .sobre-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(44px,7vw,110px);align-items:center}
+  .sobre-grid .promessas{margin:28px 0 0;grid-template-columns:repeat(3,1fr)}
+  .sobre-grid .promessas li{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 16px;border-radius:20px;font-size:.88rem;line-height:1.4}
   .sobre-foto{position:relative;padding:0 0 34px 34px;margin:0}
   .sobre-foto::before{content:"";position:absolute;left:0;bottom:0;width:78%;height:72%;border-radius:28px;background-color:#efe7da;background-image:var(--granilite,none);background-size:300px;box-shadow:var(--sombra)}
   .sobre-foto img{position:relative;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 35%;border-radius:24px;box-shadow:var(--sombra)}
@@ -214,9 +218,6 @@
   .promessas{list-style:none;padding:0;margin:34px 0;display:grid;gap:12px}
   .promessas li{display:flex;align-items:center;gap:18px;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid var(--linha);font-weight:450;color:var(--cafe)}
   .promessas li span{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--oliva);color:var(--cortina);font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.1rem}
-  .assinatura{font-family:var(--serif);font-style:italic;font-size:2.7rem;font-weight:500;color:var(--cafe);line-height:1.05}
-  .assinatura em{color:var(--oliva);font-weight:600}
-  .assinatura small{display:block;font-family:var(--sans);font-style:normal;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--carvalho);margin-top:10px}
 
   /* Seções escuras em verde oliva */
   .escuro{background-color:var(--oliva-parede);background-image:var(--grao);color:var(--cortina)}
@@ -226,20 +227,22 @@
   .escuro .cabeca p{color:rgba(244,240,232,.86)}
 
   /* =========== 3. DESTAQUES =========== */
-  .destaques-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,36px)}
-  .video-card{text-decoration:none;display:flex;flex-direction:column;color:var(--cafe);background-color:var(--cortina);background-image:var(--linho);padding:12px 12px 26px;border-radius:26px;box-shadow:0 30px 50px -30px rgba(0,0,0,.6);transition:transform .6s cubic-bezier(.2,.7,.2,1),box-shadow .6s}
-  .video-card .midia{aspect-ratio:9/16;border-radius:18px;box-shadow:none}
+  .destaques-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.2vw,28px)}
+  .video-card{text-decoration:none;display:flex;flex-direction:column;color:var(--cafe);background-color:var(--cortina);background-image:var(--linho);padding:10px 10px 22px;border-radius:22px;box-shadow:0 30px 50px -30px rgba(0,0,0,.6);transition:transform .6s cubic-bezier(.2,.7,.2,1),box-shadow .6s}
+  /* capa mais baixa que o vídeo (4:5) para o card inteiro, com o texto, caber na tela do computador */
+  .video-card .midia{aspect-ratio:4/5;border-radius:16px;box-shadow:none}
+  .video-card .midia img{object-position:50% 30%}
   .video-card:hover{transform:translateY(-8px);box-shadow:0 40px 70px -30px rgba(0,0,0,.75)}
   .video-card > :not(.midia){margin-left:12px;margin-right:12px}
   .play{position:absolute;inset:0;margin:auto;z-index:1;width:78px;height:78px;border-radius:50%;background:rgba(244,240,232,.94);display:grid;place-items:center;box-shadow:0 0 0 8px rgba(244,240,232,.25),0 12px 30px rgba(31,28,25,.25);transition:transform .45s,background .45s}
   .play svg{width:20px;height:20px;margin-left:4px;fill:var(--oliva);transition:fill .45s}
   .video-card:hover .play{transform:scale(1.08);background:var(--oliva)}
   .video-card:hover .play svg{fill:var(--cortina)}
-  .video-card .numero{font-family:var(--serif);font-weight:700;font-size:clamp(3rem,4.8vw,3.8rem);line-height:1;margin-top:24px;color:var(--oliva);letter-spacing:-.02em}
-  .video-card .numero-rotulo{font-size:.72rem;font-weight:450;letter-spacing:.22em;text-transform:uppercase;color:var(--carvalho);margin-top:6px}
-  .video-card h3{font-size:1.65rem;margin-top:16px;margin-bottom:6px}
-  .video-card p{color:var(--cafe-2);font-size:.95rem}
-  .video-card .abrir{align-self:flex-start;margin-top:16px;font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--oliva);border-bottom:1px solid currentColor;padding-bottom:2px}
+  .video-card .numero{font-family:var(--serif);font-weight:700;font-size:clamp(2.2rem,3.2vw,2.8rem);line-height:1;margin-top:18px;color:var(--oliva);letter-spacing:-.02em}
+  .video-card .numero-rotulo{font-size:.66rem;font-weight:450;letter-spacing:.18em;line-height:1.5;text-transform:uppercase;color:var(--carvalho);margin-top:6px}
+  .video-card h3{font-size:1.3rem;margin-top:12px;margin-bottom:4px}
+  .video-card p{color:var(--cafe-2);font-size:.88rem}
+  .video-card .abrir{align-self:flex-start;margin-top:auto;padding-top:14px;font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--oliva);border-bottom:1px solid currentColor;padding-bottom:2px}
 
   /* =========== 4. TRABALHOS =========== */
   .filtros{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px}
@@ -428,6 +431,7 @@
   }
   /* menu vira hambúrguer antes do resto, porque tem dois botões */
   @media (max-width:1080px){
+    .destaques-grid{grid-template-columns:repeat(2,1fr);max-width:640px;margin:0 auto}
     .hamburguer{display:block}
     .menu{position:fixed;inset:78px 0 auto 0;background:var(--cortina);border-bottom:1px solid var(--linha);padding:10px 16px 26px;transform:translateY(-8px);opacity:0;visibility:hidden;transition:all .35s}
     .menu.aberto{transform:none;opacity:1;visibility:visible}
@@ -461,6 +465,10 @@
     .destaque-item{position:relative;inset:auto;width:auto}
     .destaque-item figcaption{font-size:.9rem}
     .sobre-foto{max-width:460px}
+    /* no celular volta a ser uma coluna: foto, texto e os três itens empilhados */
+    .sobre-lado{display:contents}
+    .sobre-grid .promessas{order:1;margin:0;grid-template-columns:1fr}
+    .sobre-grid .promessas li{flex-direction:row;align-items:center;gap:18px;padding:14px 22px;border-radius:999px;font-size:inherit}
     .destaques-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
     .resultados{grid-template-columns:1fr}
   }
@@ -611,7 +619,7 @@
     <div class="cabeca revelar">
       <span class="rotulo">Destaques</span>
       <h2 id="titulo-destaques">Conteúdos de <em>destaque</em></h2>
-      <p>Três vídeos que mostram o meu jeito de criar. Toque em qualquer um para assistir no Instagram.</p>
+      <p>Quatro vídeos que mostram o meu jeito de criar. Toque em qualquer um para assistir no Instagram.</p>
     </div>
     <!-- Os cards são gerados pelo array "destaques" no script.
          LINK DO VÍDEO: campo "link" de cada item.
@@ -623,9 +631,17 @@
 <!-- ============ 3. SOBRE MIM ============ -->
 <section id="sobre" aria-labelledby="titulo-sobre">
   <div class="container sobre-grid">
+    <!-- no computador os três itens ficam lado a lado, embaixo da foto -->
+    <div class="sobre-lado">
     <figure class="sobre-foto revelar">
       <img src="fotos/caroline-sobre.webp" alt="Caroline Costa sorrindo à mesa de gravação, com câmera, microfone, celular, troféu de teatro e caixas de produtos" width="1362" height="1362" loading="lazy">
     </figure>
+    <ul class="promessas revelar">
+      <li><span>i</span>Roteiro da marca ou escrito por mim a partir do briefing</li>
+      <li><span>ii</span>Edição completa, com legendas, cortes e ângulos variados</li>
+      <li><span>iii</span>Entrega em até 2 dias após receber o produto</li>
+    </ul>
+    </div>
     <div class="sobre-texto revelar">
       <span class="rotulo">Sobre mim</span>
       <h2 id="titulo-sobre">Prazer, eu sou a <em>Caroline</em></h2>
@@ -640,12 +656,6 @@
         <li><strong>+10</strong>anos de palco</li>
         <li><strong>Prêmio</strong>melhor diretora teatral</li>
       </ul>
-      <ul class="promessas">
-        <li><span>i</span>Roteiro da marca ou escrito por mim a partir do briefing</li>
-        <li><span>ii</span>Edição completa, com legendas, cortes e ângulos variados</li>
-        <li><span>iii</span>Entrega em até 2 dias após receber o produto</li>
-      </ul>
-      <p class="assinatura">Caroline <em>Costa</em><small>Criadora UGC, atriz, mãe e empresária</small></p>
     </div>
   </div>
 </section>
@@ -900,7 +910,9 @@ const marcas = [
   { nome: "You-K! Foods",    logo: "logos/you-k.png",            altura: 58 },
   { nome: "Lackto",          logo: "logos/lackto.png",           altura: 96 },
   { nome: "União Magistral", logo: "logos/uniao-magistral.png",  altura: 46 },
-  { nome: "Nobugs",          logo: "logos/nobugs.webp",          altura: 74 }
+  { nome: "Nobugs",          logo: "logos/nobugs.webp",          altura: 74 },
+  { nome: "Onda Marinha",    logo: "logos/onda-marinha.png",     altura: 52 },
+  { nome: "UCEFF",           logo: "logos/uceff.png",            altura: 40 }
 ];
 
 // Três números da capa.
@@ -916,6 +928,16 @@ const numerosCapa = [
 //   Exemplo: instagram.com/reel/DZhvVJ_x18R/?utm_source=... vira "DZhvVJ_x18R".
 // capa: imagem vertical 9:16 do vídeo (um arquivo da pasta "fotos" ou um link). Deixe "" para usar o degradê.
 const destaques = [
+  {
+    instagram: "DfaNbnMRR9Y",
+    capa: "videos/capas/onda-marinha-inauguracao.jpg",
+    marca: "Onda Marinha",
+    numero: "24h",
+    rotuloNumero: "vídeo feito de forma rápida para a marca",
+    titulo: "Inauguração presencial",
+    contexto: "Vídeo feito para a marca Onda Marinha.",
+    gradiente: "g4"
+  },
   {
     instagram: "Dc2DOyvxt0t",
     capa: "fotos/capa-maternidade.jpg",
@@ -961,6 +983,8 @@ const trabalhos = [
   { nicho: "Maternidade",          marca: "Verdi Natural",       titulo: "Kit Xô Gripe",                   video: "videos/verdi-kit-xo-gripe.mp4",        capa: "videos/capas/verdi-kit-xo-gripe.jpg",        views: "" },
   { nicho: "Maternidade",          marca: "Verdi Natural",       titulo: "Kit Sono",                       video: "videos/verdi-kit-sono.mp4",            capa: "videos/capas/verdi-kit-sono.jpg",            views: "" },
   { nicho: "Maternidade",          marca: "Letut",               titulo: "Roupa infantil",                 video: "videos/letut.mp4",                     capa: "videos/capas/letut.jpg",                     views: "" },
+  { nicho: "Maternidade",          marca: "Onda Marinha",        titulo: "Inauguração da loja",            video: "videos/onda-marinha-inauguracao.mp4",  capa: "videos/capas/onda-marinha-inauguracao.jpg",  views: "" },
+  { nicho: "Maternidade",          marca: "Onda Marinha",        titulo: "Loja física em Joinville",       video: "videos/onda-marinha-joinville.mp4",    capa: "videos/capas/onda-marinha-joinville.jpg",    views: "" },
   { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Mix de brownie",                 video: "videos/youk-brownie.mp4",              capa: "videos/capas/youk-brownie.jpg",              views: "" },
   { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Pão sem glúten",                 video: "videos/youk-pao.mp4",                  capa: "videos/capas/youk-pao.jpg",                  views: "" },
   { nicho: "Alimentação saudável", marca: "You-K! Foods",        titulo: "Snack saudável",                 video: "videos/youk-snack-saudavel.mp4",       capa: "videos/capas/youk-snack-saudavel.jpg",       views: "" },
@@ -978,6 +1002,7 @@ const trabalhos = [
   { nicho: "Casa e rotina",        marca: "Bravatti",            titulo: "Jogo de panelas de cerâmica",    video: "videos/bravatti.mp4",                  capa: "videos/capas/bravatti.jpg",                  views: "" },
   { nicho: "Negócios e tech",      marca: "Yelly",               titulo: "App de pagamentos",              video: "videos/yelly.mp4",                     capa: "videos/capas/yelly.jpg",                     views: "+48 mil views" },
   { nicho: "Negócios e tech",      marca: "Noroeste Solar",      titulo: "Energia solar na conta de luz",  video: "videos/noroeste-solar.mp4",            capa: "videos/capas/noroeste-solar.jpg",            views: "" },
+  { nicho: "Negócios e tech",      marca: "UCEFF",               titulo: "Cursos EAD",                     video: "videos/uceff-cursos-ead.mp4",          capa: "videos/capas/uceff-cursos-ead.jpg",          views: "" },
   { nicho: "Negócios e tech",      marca: "Negócios Essenciais", titulo: "Mentoria de comunicação",        youtube: "MT5JdlG90iA",                                                                            views: "" },
   { nicho: "Viagens",              marca: "Viagem",              titulo: "Holambra, Cidade das Flores",    video: "videos/holambra.mp4",                  capa: "videos/capas/holambra.jpg",                  views: "" },
   { nicho: "Viagens",              marca: "Viagem",              titulo: "Motorhome em família",           video: "videos/motorhome.mp4",                 capa: "videos/capas/motorhome.jpg",                 views: "" },
