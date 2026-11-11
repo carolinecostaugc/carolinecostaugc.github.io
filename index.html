@@ -418,6 +418,8 @@
   .revelar{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
   .revelar.visivel{opacity:1;transform:none}
   .sem-js .revelar{opacity:1;transform:none}
+  /* dentro do mapa de calor do painel: tudo já aparece, sem animação de entrada */
+  .no-mapa .revelar{opacity:1;transform:none;transition:none}
 
   /* =========== RESPONSIVO =========== */
   @media (max-width:1020px){ .menu ul{gap:22px} }
@@ -898,6 +900,11 @@
 // Enquanto estiver "", os formulários só mostram a confirmação na tela e não enviam nada.
 const formspree = "https://formspree.io/f/myekadgb";
 
+// MÉTRICAS: o painel (admin-ugc > Portfólio) recebe as visitas, cliques, vídeos e contatos do site.
+// São as mesmas chaves PÚBLICAS do config.js do painel. Deixe "" para desligar as métricas.
+const metricasUrl = "https://vuugnvljluhlcepaswni.supabase.co";
+const metricasChave = "sb_publishable_ohxrwOEq7bSQd7vY7qJB1Q_cJlluLe4";
+
 // Marcas da faixa que rola. Os logos ficam na pasta "logos".
 // logo: caminho do arquivo (deixe "" para aparecer o nome escrito).
 // altura: tamanho do logo na faixa, em pixels. Aumente quando o arquivo tiver muita borda em volta.
@@ -1194,6 +1201,7 @@ function abrirPlayer(id, titulo, origem = "youtube", capa = "") {
     playerLink.textContent = origem === "instagram" ? "Abrir no Instagram" : "Abrir no YouTube";
   }
   $("#player-titulo").textContent = titulo;
+  rastreio.videoAbriu(titulo);
   player.classList.add("aberta"); player.setAttribute("aria-hidden", "false");
   $("#fechar-player").focus();
 }
@@ -1201,6 +1209,7 @@ function fecharPlayer() {
   if (!player.classList.contains("aberta")) return;
   player.classList.remove("aberta"); player.setAttribute("aria-hidden", "true");
   playerVideo.innerHTML = "";
+  rastreio.videoFechou();
   if (focoAntesPlayer) focoAntesPlayer.focus();
 }
 $("#trabalhos-grid").addEventListener("click", (e) => {
@@ -1367,16 +1376,160 @@ if ("IntersectionObserver" in window && !reduzMovimento) {
   document.querySelectorAll("[data-valor]").forEach(contar);
 }
 
-// Envia um formulário para o Formspree. Devolve true se deu certo (ou se o Formspree ainda não foi configurado).
+// Métricas do portfólio: visitas, de onde vieram, cliques (mapa de calor), tempo em cada seção,
+// vídeos abertos, cliques no WhatsApp e formulários. Tudo aparece no painel, em Portfólio.
+// Quem só navega não é identificado: o visitante é um código aleatório guardado no navegador.
+// Não conta: dentro do mapa de calor do painel, no computador local e nos aparelhos marcados no painel.
+const rastreio = (() => {
+  const noMapa = window.top !== window.self && /[?&]mapa=1\b/.test(location.search);
+  const ler = (onde, k) => { try { return window[onde].getItem(k); } catch (e) { return null; } };
+  const gravar = (onde, k, v) => { try { window[onde].setItem(k, v); } catch (e) {} };
+  const desligado = noMapa || !metricasUrl || !metricasChave || location.protocol === "file:" ||
+    ["localhost", "127.0.0.1"].includes(location.hostname) || ler("localStorage", "portfolioNaoContar") === "1";
+  if (noMapa) document.documentElement.classList.add("no-mapa");
+
+  const novoId = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let visitante = ler("localStorage", "portfolioVisitante");
+  if (!visitante) { visitante = novoId(); gravar("localStorage", "portfolioVisitante", visitante); }
+  let sessao = ler("sessionStorage", "portfolioSessao");
+  if (!sessao) { sessao = novoId(); gravar("sessionStorage", "portfolioSessao", sessao); }
+  const dispositivo = window.matchMedia("(max-width: 900px)").matches ? "celular" : "computador";
+
+  // De onde veio: ?utm_source=... ou o site que trouxe a pessoa
+  const origem = (() => {
+    const utm = new URLSearchParams(location.search).get("utm_source");
+    let host = "";
+    try { host = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+    if (host === location.hostname) host = "";
+    const nomes = { instagram: "Instagram", facebook: "Facebook", fb: "Facebook", google: "Google", linkedin: "LinkedIn", lnkd: "LinkedIn",
+      whatsapp: "WhatsApp", wa: "WhatsApp", tiktok: "TikTok", youtube: "YouTube", t: "X (Twitter)", x: "X (Twitter)", bing: "Bing" };
+    const chave = (utm || host).toLowerCase();
+    const achado = Object.keys(nomes).find((n) => chave === n || chave.startsWith(n + ".") || chave.includes("." + n + "."));
+    return achado ? nomes[achado] : (utm || host || "Direto").slice(0, 80);
+  })();
+
+  const fila = [];
+  const rpc = (nome, corpo, manter = false) => fetch(`${metricasUrl}/rest/v1/rpc/${nome}`, {
+    method: "POST", keepalive: manter, body: JSON.stringify(corpo),
+    headers: { apikey: metricasChave, "Content-Type": "application/json" },
+  }).then((r) => r.ok).catch(() => false);
+  const anotar = (tipo, dados = {}) => {
+    if (desligado) return;
+    fila.push({ visitante, sessao, tipo, dispositivo, ...dados });
+    if (fila.length >= 50) enviar();
+  };
+
+  // Em qual seção está um elemento (o id da <section>, ou menu, faixa de marcas e rodapé)
+  function secaoDe(el) {
+    if (!el || !el.closest) return null;
+    if (el.closest("#player")) return { id: "player" };
+    if (el.closest("#captura")) return { id: "captura" };
+    const s = el.closest("section[id], .topo, .faixa, .rodape");
+    if (!s) return null;
+    const id = s.id && s.tagName === "SECTION" ? s.id : s.classList.contains("topo") ? "topo" : s.classList.contains("faixa") ? "marcas" : "rodape";
+    return { id, el: s };
+  }
+  // Nome curto do que foi clicado
+  function nomeDe(el) {
+    const alvo = el.closest("a, button, input, textarea, select, label, .trabalho, .video-card, .foto-ugc");
+    if (!alvo) return null;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(alvo.tagName)) return "Campo: " + (alvo.name || alvo.id || "sem nome");
+    const t = alvo.dataset.titulo || alvo.getAttribute("aria-label") || alvo.textContent || "";
+    return t.replace(/\s+/g, " ").trim().slice(0, 90) || null;
+  }
+
+  // Cliques (e o WhatsApp, que também vira um contato "Em aberto" no painel)
+  document.addEventListener("click", (e) => {
+    if (desligado) return;
+    const s = secaoDe(e.target);
+    const dados = { alvo: nomeDe(e.target), secao: s ? s.id : null };
+    if (s && s.el) {
+      const r = s.el.getBoundingClientRect();
+      if (r.width && r.height) {
+        dados.x = Math.round(((e.clientX - r.left) / r.width) * 1000) / 1000;
+        dados.y = Math.round(((e.clientY - r.top) / r.height) * 1000) / 1000;
+      }
+    }
+    const zap = e.target.closest('a[href*="wa.me/"]');
+    if (zap) {
+      const botao = `${dados.alvo || "WhatsApp"}${s ? ` (${s.id})` : ""}`.slice(0, 80);
+      let texto = "";
+      try { texto = new URL(zap.href).searchParams.get("text") || ""; } catch (err) {}
+      anotar("whatsapp", dados);
+      rpc("portfolio_contato", { dados: { tipo: "whatsapp", botao, mensagem: texto, visitante, origem } }, true);
+      enviar(true);
+    } else {
+      anotar("clique", dados);
+    }
+  }, true);
+
+  // Tempo em cada seção: a cada segundo, conta a seção que está no meio da tela
+  // (só com a aba aberta e a pessoa ativa nos últimos 2 minutos)
+  const tempo = {};
+  let ativoEm = Date.now();
+  ["scroll", "pointermove", "keydown", "touchstart"].forEach((ev) => addEventListener(ev, () => { ativoEm = Date.now(); }, { passive: true }));
+  setInterval(() => {
+    if (desligado || document.visibilityState !== "visible" || Date.now() - ativoEm > 120000) return;
+    const s = secaoDe(document.elementFromPoint(innerWidth / 2, innerHeight / 2));
+    if (s) tempo[s.id] = (tempo[s.id] || 0) + 1;
+  }, 1000);
+
+  // Vídeo aberto: conta quanto tempo ficou com ele aberto
+  let video = null;
+  const fecharVideo = () => {
+    if (!video) return;
+    anotar("video", { alvo: video.titulo.slice(0, 120), segundos: Math.round((Date.now() - video.desde) / 1000), secao: video.secao });
+    video = null;
+  };
+
+  function enviar(manter = false) {
+    Object.keys(tempo).forEach((secao) => { anotar("secao", { secao, segundos: tempo[secao] }); delete tempo[secao]; });
+    while (fila.length) rpc("portfolio_registrar", { eventos: fila.splice(0, 50) }, manter);
+  }
+  setInterval(enviar, 20000);
+  addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") { fecharVideo(); enviar(true); } });
+  addEventListener("pagehide", () => { fecharVideo(); enviar(true); });
+
+  // 1 visita por sessão
+  if (!desligado && !ler("sessionStorage", "portfolioVisitaContada")) {
+    gravar("sessionStorage", "portfolioVisitaContada", "1");
+    anotar("visita", { origem, alvo: (location.pathname + location.hash).slice(0, 120) });
+    setTimeout(enviar, 1500);
+  }
+
+  return {
+    noMapa,
+    videoAbriu(titulo) { fecharVideo(); video = { titulo: String(titulo || "Vídeo"), desde: Date.now(), secao: secaoDe(document.activeElement)?.id || null }; },
+    videoFechou: fecharVideo,
+    // Guarda o formulário no painel. Devolve true se gravou.
+    async formulario(form) {
+      if (desligado || (form._gotcha && form._gotcha.value)) return false;
+      const tipo = form.id === "form-captura" ? "black_friday" : "formulario";
+      anotar("formulario", { alvo: tipo, secao: secaoDe(form)?.id || null });
+      enviar(true);
+      return rpc("portfolio_contato", { dados: {
+        tipo, visitante, origem,
+        nome: form.nome ? form.nome.value : "", email: form.email ? form.email.value : "",
+        mensagem: form.mensagem ? form.mensagem.value : "",
+      } }, true);
+    },
+  };
+})();
+
+// Envia um formulário para o Formspree (e-mail) e para o painel. Devolve true se chegou em pelo menos um dos dois
+// (ou se o Formspree ainda não foi configurado).
 async function enviarFormulario(form, aviso) {
   aviso.textContent = "";
-  if (!formspree) return true;
+  const painel = rastreio.formulario(form);
+  if (!formspree) { await painel; return true; }
   const botao = form.querySelector('button[type="submit"]');
   const textoBotao = botao.innerHTML;
   botao.disabled = true; botao.textContent = "Enviando...";
   try {
-    const r = await fetch(formspree, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
-    if (!r.ok) throw new Error("HTTP " + r.status);
+    const email = fetch(formspree, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
+      .then((r) => r.ok).catch(() => false);
+    const [okEmail, okPainel] = await Promise.all([email, painel]);
+    if (!okEmail && !okPainel) throw new Error("não enviou");
     return true;
   } catch (err) {
     aviso.textContent = "Não consegui enviar agora. Tente de novo ou me chame no WhatsApp.";
@@ -1424,7 +1577,7 @@ function fecharCaptura() {
   captura.setAttribute("aria-hidden", "true");
   if (focoAnterior) focoAnterior.focus();
 }
-setTimeout(abrirCaptura, 7000);
+if (!rastreio.noMapa) setTimeout(abrirCaptura, 7000);
 $("#fechar-captura").addEventListener("click", fecharCaptura);
 captura.addEventListener("click", (e) => { if (e.target === captura) fecharCaptura(); });
 document.addEventListener("keydown", (e) => {
